@@ -1,0 +1,502 @@
+[
+  {
+    "id": 1,
+    "title": "VP Sales Updated",
+    "description": "Nondisplaced fracture of third metatarsal bone, left foot, initial encounter for open fracture"
+  },
+  {
+    "id": 3,
+    "title": "Financial Analyst",
+    "description": "War operations involving direct blast effect of nuclear weapon"
+  },
+  {
+    "id": 4,
+    "title": "Automation Specialist II",
+    "description": "Nondisplaced fracture of first metatarsal bone, unspecified foot, subsequent encounter for fracture with routine healing"
+  },
+  {
+    "id": 5,
+    "title": "Recruiting Manager",
+    "description": "Skeletal fluorosis, ankle and foot"
+  },
+  {
+    "id": 6,
+    "title": "Civil Engineer",
+    "description": "Contusion and laceration of left cerebrum with loss of consciousness greater than 24 hours with return to pre-existing conscious level, sequela"
+  },
+  {
+    "id": 7,
+    "title": "Safety Technician IV",
+    "description": "Underdosing of skeletal muscle relaxants [neuromuscular blocking agents]"
+  },
+  {
+    "id": 8,
+    "title": "Developer I",
+    "description": "Benign neoplasm of parathyroid gland"
+  },
+  {
+    "id": 9,
+    "title": "Media Manager III",
+    "description": "Osteopathy after poliomyelitis, left shoulder"
+  },
+  {
+    "id": 10,
+    "title": "Geologist II",
+    "description": "Breakdown (mechanical) of aortic (bifurcation) graft (replacement), subsequent encounter"
+  },
+  {
+    "id": 11,
+    "title": "Actuary",
+    "description": "Fall from skateboard, subsequent encounter"
+  },
+  {
+    "id": 12,
+    "title": "Accounting Assistant IV",
+    "description": "Toxic effects of other halogen derivatives of aromatic hydrocarbons"
+  },
+  {
+    "id": 13,
+    "title": "Financial Advisor",
+    "description": "Traumatic rupture of other ligament of right index finger at metacarpophalangeal and interphalangeal joint, initial encounter"
+  },
+  {
+    "id": 14,
+    "title": "Software Test Engineer III",
+    "description": "External constriction of left thumb"
+  },
+  {
+    "id": 15,
+    "title": "Pharmacist",
+    "description": "Strain of intrinsic muscle, fascia and tendon of right little finger at wrist and hand level, sequela"
+  },
+  {
+    "id": 16,
+    "title": "Senior Cost Accountant",
+    "description": "Other vitamin B12 deficiency anemias"
+  },
+  {
+    "id": 17,
+    "title": "Database Administrator II",
+    "description": "Other polyglandular dysfunction"
+  },
+  {
+    "id": 18,
+    "title": "Graphic Designer",
+    "description": "Diagnostic and monitoring general- and plastic-surgery devices associated with adverse incidents"
+  },
+  {
+    "id": 19,
+    "title": "Data Coordinator",
+    "description": "Poisoning by, adverse effect of and underdosing of other and unspecified drugs acting on muscles"
+  },
+  {
+    "id": 20,
+    "title": "Administrative Assistant II",
+    "description": "Unspecified physeal fracture of upper end of right fibula, subsequent encounter for fracture with routine healing"
+  },
+  {
+    "id": 21,
+    "title": "Biostatistician II",
+    "description": "Inhalation of dry ice, initial encounter"
+  },
+  {
+    "id": 22,
+    "title": "Administrative Officer",
+    "description": "Other injury of other muscle(s) and tendon(s) of posterior muscle group at lower leg level, right leg, initial encounter"
+  },
+  {
+    "id": 23,
+    "title": "Data Coordinator",
+    "description": "Dislocation of unspecified parts of neck, sequela"
+  },
+  {
+    "id": 24,
+    "title": "VP Accounting",
+    "description": "Maternal care for intrauterine death, fetus 3"
+  },
+  {
+    "id": 25,
+    "title": "Electrical Engineer",
+    "description": "Failed moderate sedation during procedure, sequela"
+  },
+  {
+    "id": 26,
+    "title": "Financial Analyst",
+    "description": "Corrosion of unspecified degree of right scapular region, initial encounter"
+  },
+  {
+    "id": 27,
+    "title": "Statistician III",
+    "description": "Unspecified open wound of left front wall of thorax with penetration into thoracic cavity, subsequent encounter"
+  },
+  {
+    "id": 28,
+    "title": "Programmer Analyst II",
+    "description": "Osteonecrosis in diseases classified elsewhere, left ankle and foot"
+  },
+  {
+    "id": 29,
+    "title": "Legal Assistant",
+    "description": "Toxic effect of other specified inorganic substances"
+  },
+  {
+    "id": 30,
+    "title": "Environmental Tech",
+    "description": "Superficial injury of other parts of head"
+  },
+  {
+    "id": 31,
+    "title": "Administrative Officer",
+    "description": "Complex tear of medial meniscus, current injury, left knee"
+  },
+  {
+    "id": 32,
+    "title": "Pharmacist",
+    "description": "Other shoulder lesions"
+  },
+  {
+    "id": 33,
+    "title": "VP Marketing",
+    "description": "Non-pressure chronic ulcer of unspecified part of unspecified lower leg"
+  },
+  {
+    "id": 34,
+    "title": "Research Assistant IV",
+    "description": "Other mechanical complication of cystostomy catheter, sequela"
+  },
+  {
+    "id": 35,
+    "title": "Computer Systems Analyst I",
+    "description": "Underdosing of other antihypertensive drugs, subsequent encounter"
+  },
+  {
+    "id": 36,
+    "title": "Registered Nurse",
+    "description": "Laceration without foreign body of unspecified wrist, subsequent encounter"
+  },
+  {
+    "id": 37,
+    "title": "Media Manager I",
+    "description": "Thyrotoxicosis [hyperthyroidism]"
+  },
+  {
+    "id": 38,
+    "title": "Help Desk Operator",
+    "description": "Contact with combine harvester, initial encounter"
+  },
+  {
+    "id": 39,
+    "title": "Civil Engineer",
+    "description": "Abnormal findings on diagnostic imaging of other parts of musculoskeletal system"
+  },
+  {
+    "id": 40,
+    "title": "Legal Assistant",
+    "description": "Burn of third degree of right wrist, subsequent encounter"
+  },
+  {
+    "id": 41,
+    "title": "Senior Sales Associate",
+    "description": "Severe sepsis"
+  },
+  {
+    "id": 42,
+    "title": "Research Assistant III",
+    "description": "Displaced transverse fracture of shaft of humerus, left arm, subsequent encounter for fracture with nonunion"
+  },
+  {
+    "id": 43,
+    "title": "Financial Advisor",
+    "description": "Other superficial bite of unspecified back wall of thorax, initial encounter"
+  },
+  {
+    "id": 44,
+    "title": "Executive Secretary",
+    "description": "Displaced fracture of shaft of other metacarpal bone, subsequent encounter for fracture with delayed healing"
+  },
+  {
+    "id": 45,
+    "title": "Quality Control Specialist",
+    "description": "Burn of first degree of shoulder and upper limb, except wrist and hand, unspecified site, subsequent encounter"
+  },
+  {
+    "id": 46,
+    "title": "Executive Secretary",
+    "description": "Placentitis, first trimester"
+  },
+  {
+    "id": 47,
+    "title": "Legal Assistant",
+    "description": "Poisoning by other viral vaccines, intentional self-harm"
+  },
+  {
+    "id": 48,
+    "title": "Health Coach II",
+    "description": "Laceration without foreign body, right ankle, initial encounter"
+  },
+  {
+    "id": 49,
+    "title": "Structural Analysis Engineer",
+    "description": "Unspecified open wound of unspecified back wall of thorax with penetration into thoracic cavity, sequela"
+  },
+  {
+    "id": 50,
+    "title": "Systems Administrator I",
+    "description": "Accidental puncture and laceration of a musculoskeletal structure during a procedure"
+  },
+  {
+    "id": 51,
+    "title": "General Manager",
+    "description": "Breakdown (mechanical) of other ocular prosthetic devices, implants and grafts"
+  },
+  {
+    "id": 52,
+    "title": "Financial Analyst",
+    "description": "Nondisplaced fracture of distal pole of navicular [scaphoid] bone of right wrist, subsequent encounter for fracture with malunion"
+  },
+  {
+    "id": 53,
+    "title": "Nurse Practicioner",
+    "description": "External constriction of unspecified wrist"
+  },
+  {
+    "id": 54,
+    "title": "Accounting Assistant IV",
+    "description": "Nondisplaced fracture of neck of scapula, unspecified shoulder"
+  },
+  {
+    "id": 55,
+    "title": "Executive Secretary",
+    "description": "Laceration of lung, unspecified, initial encounter"
+  },
+  {
+    "id": 56,
+    "title": "Information Systems Manager",
+    "description": "Other specified disorders of right ear"
+  },
+  {
+    "id": 57,
+    "title": "Recruiting Manager",
+    "description": "Displaced fracture of base of second metacarpal bone, right hand"
+  },
+  {
+    "id": 58,
+    "title": "Professor",
+    "description": "Pressure ulcer of head, stage 3"
+  },
+  {
+    "id": 59,
+    "title": "Sales Associate",
+    "description": "Abrasion of wrist"
+  },
+  {
+    "id": 60,
+    "title": "Senior Developer",
+    "description": "Assault by other gas, air or spring-operated gun"
+  },
+  {
+    "id": 61,
+    "title": "Legal Assistant",
+    "description": "Unspecified superficial injury of unspecified lower leg, initial encounter"
+  },
+  {
+    "id": 62,
+    "title": "Safety Technician III",
+    "description": "Unspecified corneal deposit, unspecified eye"
+  },
+  {
+    "id": 63,
+    "title": "Staff Scientist",
+    "description": "Complete physeal arrest, left proximal femur"
+  },
+  {
+    "id": 64,
+    "title": "Electrical Engineer",
+    "description": "Abrasion of unspecified forearm"
+  },
+  {
+    "id": 65,
+    "title": "Account Executive",
+    "description": "Nondisplaced Rolando's fracture, unspecified hand, subsequent encounter for fracture with nonunion"
+  },
+  {
+    "id": 66,
+    "title": "Senior Developer",
+    "description": "Continuing pregnancy after spontaneous abortion of one fetus or more, second trimester, fetus 1"
+  },
+  {
+    "id": 67,
+    "title": "Accounting Assistant IV",
+    "description": "Maternal care for retroversion of gravid uterus, second trimester"
+  },
+  {
+    "id": 68,
+    "title": "Research Associate",
+    "description": "Posterior subluxation of left ulnohumeral joint, sequela"
+  },
+  {
+    "id": 69,
+    "title": "Account Coordinator",
+    "description": "Puncture wound with foreign body of right lesser toe(s) without damage to nail, initial encounter"
+  },
+  {
+    "id": 70,
+    "title": "Pharmacist",
+    "description": "Anesthesia of skin"
+  },
+  {
+    "id": 71,
+    "title": "Food Chemist",
+    "description": "Nondisplaced fracture of medial condyle of right tibia, subsequent encounter for closed fracture with nonunion"
+  },
+  {
+    "id": 72,
+    "title": "Structural Engineer",
+    "description": "Postprocedural seroma of left eye and adnexa following an ophthalmic procedure"
+  },
+  {
+    "id": 73,
+    "title": "Cost Accountant",
+    "description": "Salter-Harris Type IV physeal fracture of lower end of right tibia, subsequent encounter for fracture with routine healing"
+  },
+  {
+    "id": 74,
+    "title": "Senior Developer",
+    "description": "Contusion of left eyelid and periocular area"
+  },
+  {
+    "id": 75,
+    "title": "Nuclear Power Engineer",
+    "description": "Corrosion of unspecified degree of left scapular region"
+  },
+  {
+    "id": 76,
+    "title": "Computer Systems Analyst III",
+    "description": "Other hypertrophic osteoarthropathy, right upper arm"
+  },
+  {
+    "id": 77,
+    "title": "Editor",
+    "description": "Other incomplete lesion at unspecified level of thoracic spinal cord, sequela"
+  },
+  {
+    "id": 78,
+    "title": "Computer Systems Analyst I",
+    "description": "Open bite of unspecified front wall of thorax with penetration into thoracic cavity, initial encounter"
+  },
+  {
+    "id": 79,
+    "title": "Civil Engineer",
+    "description": "Nondisplaced segmental fracture of shaft of humerus, left arm, subsequent encounter for fracture with malunion"
+  },
+  {
+    "id": 80,
+    "title": "Accounting Assistant III",
+    "description": "Retinopathy of prematurity, stage 1"
+  },
+  {
+    "id": 81,
+    "title": "Senior Editor",
+    "description": "Myositis ossificans progressiva, unspecified site"
+  },
+  {
+    "id": 82,
+    "title": "Registered Nurse",
+    "description": "Unspecified motorcycle rider injured in collision with railway train or railway vehicle in nontraffic accident, subsequent encounter"
+  },
+  {
+    "id": 83,
+    "title": "Director of Sales",
+    "description": "Person injured in other specified (collision)(noncollision) transport accidents involving nonmotor vehicle, nontraffic"
+  },
+  {
+    "id": 84,
+    "title": "Pharmacist",
+    "description": "Unspecified chronic conjunctivitis, left eye"
+  },
+  {
+    "id": 85,
+    "title": "Clinical Specialist",
+    "description": "Posterior subluxation of left humerus"
+  },
+  {
+    "id": 86,
+    "title": "Physical Therapy Assistant",
+    "description": "Garage of reform school as the place of occurrence of the external cause"
+  },
+  {
+    "id": 87,
+    "title": "Desktop Support Technician",
+    "description": "Nondisplaced fracture of medial condyle of left femur, subsequent encounter for open fracture type I or II with malunion"
+  },
+  {
+    "id": 88,
+    "title": "Engineer III",
+    "description": "Pecked by chicken"
+  },
+  {
+    "id": 89,
+    "title": "Assistant Media Planner",
+    "description": "Pedal cycle passenger injured in collision with fixed or stationary object in traffic accident, initial encounter"
+  },
+  {
+    "id": 90,
+    "title": "Marketing Manager",
+    "description": "Military operations involving explosion of sea-based artillery shell, military personnel, subsequent encounter"
+  },
+  {
+    "id": 91,
+    "title": "Registered Nurse",
+    "description": "Traumatic subarachnoid hemorrhage with loss of consciousness of any duration with death due to brain injury prior to regaining consciousness, sequela"
+  },
+  {
+    "id": 92,
+    "title": "VP Product Management",
+    "description": "Toxic effect of contact with Portugese Man-o-war, intentional self-harm, subsequent encounter"
+  },
+  {
+    "id": 93,
+    "title": "Sales Associate",
+    "description": "Pressure ulcer of unspecified buttock, stage 4"
+  },
+  {
+    "id": 94,
+    "title": "Product Engineer",
+    "description": "Motorcycle driver injured in collision with railway train or railway vehicle in nontraffic accident"
+  },
+  {
+    "id": 95,
+    "title": "Analyst Programmer",
+    "description": "Other paralytic syndrome following cerebral infarction, bilateral"
+  },
+  {
+    "id": 96,
+    "title": "Assistant Media Planner",
+    "description": "Underdosing of other parasympathomimetics, subsequent encounter"
+  },
+  {
+    "id": 97,
+    "title": "Design Engineer",
+    "description": "Other specified injuries of unspecified thigh"
+  },
+  {
+    "id": 98,
+    "title": "Data Coordinator",
+    "description": "Other injuries of lung, unilateral, sequela"
+  },
+  {
+    "id": 99,
+    "title": "Sales Representative",
+    "description": "Unspecified physeal fracture of phalanx of left toe"
+  },
+  {
+    "id": 100,
+    "title": "Accounting Assistant II",
+    "description": "Toxic effect of benzene, accidental (unintentional), subsequent encounter"
+  },
+  {
+    "title": "VP Sales new",
+    "description": "Nondisplaced fracture of third metatarsal bone, left foot, initial encounter for open fracture",
+    "id": 101
+  }
+]
