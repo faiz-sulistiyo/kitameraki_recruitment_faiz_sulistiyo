@@ -1,5 +1,5 @@
-export interface ITask extends ITaskOptional {
-    id:number,
+export interface ITask extends Partial<ITaskOptional> {
+    id?:number,
     title:string,
     description:string
 }

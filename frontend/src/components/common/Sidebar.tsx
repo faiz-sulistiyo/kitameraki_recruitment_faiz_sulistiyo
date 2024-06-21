@@ -15,12 +15,9 @@ const navStyles: Partial<INavStyles> = {
   },
 };
 
-// adding an empty title string to each link removes the tooltip;
-// it's unnecessary now that the text wraps, and will not truncate
-
-
 const SideBar: React.FunctionComponent = () => {
-  const navLinkGroups = routes[0]?.children?.map((item)=>{
+  // Map our routes to INavLinkGroup from fluent ui
+  const navLinkGroups:INavLinkGroup[] = routes[0]?.children?.map((item)=>{
     return {
       links: [
         {
@@ -28,7 +25,8 @@ const SideBar: React.FunctionComponent = () => {
           url:item.path,
           key:item.id,
           isExpanded: !!item.children?.length,
-          expandAriaLabel: (!!item.children?.length) && item.id,
+          target: "_top",
+          expandAriaLabel: item.id,
           links: item.children?.filter(
             (route) =>
               !["create", "edit", "detail"].some((exclude) =>
@@ -39,18 +37,18 @@ const SideBar: React.FunctionComponent = () => {
               name:subItem.id,
               url: subItem.index ? subItem.path : `${item.path}/${subItem.path}`,
               key:subItem.id,
+              target: "_top"
             }
-          }) || undefined
+          })
         }
       ]
     }
-  });
+  }) as INavLinkGroup[];
 
-  console.log(navLinkGroups);
   return (
     <div className='flex flex-col border h-screen sticky top-0'>
       <h1 className='text-center font-bold p-6'>My Task</h1>
-      <Nav selectedKey="key6" ariaLabel="Nav example with wrapped link text" styles={navStyles} groups={navLinkGroups as INavLinkGroup[]} />
+      <Nav selectedKey="key6" ariaLabel="Nav example with wrapped link text" styles={navStyles} groups={navLinkGroups} />
     </div>
   );
 };

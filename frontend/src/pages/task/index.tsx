@@ -1,12 +1,13 @@
 import {useListTask} from "./hook"
 import {Card} from "../../components/common/Card"
 import TaskCard from "../../components/common/TaskCard"
+import { PrimaryButton } from "@fluentui/react"
 
 const ListTaskPage = () => {
-  const {data,method} = useListTask()
+  const {data, method} = useListTask()
   return (
-    <Card className="flex flex-col">
-      <div className="flex flex-col items-center justify-center gap-4 py-6">
+    <Card className="flex flex-col gap-6">
+      <div className="flex flex-col items-center justify-center gap-4">
         <h1 className="font-bold text-lg">Welcome to the Task List page!</h1>
         <p className="text-sm font-medium lg:max-w-[60%] text-center">
           This page allows you to manage your tasks efficiently with basic CRUD
@@ -14,15 +15,18 @@ const ListTaskPage = () => {
           and make sure nothing falls through the cracks.
         </p>
       </div>
+      <PrimaryButton onClick={method.handleClickAdd} text="Add Task" className="w-fit"/>
       <div className="grid grid-cols-2 gap-2">
         {data.listTask.map((task) => {
           return (
             <TaskCard
+              id={task.id || 0}
+              description={task.description}
+              title={task.title}
               key={task.id}
-              onConfirmDelet={method.handleConfirmDelete}
+              onConfirmDelete={method.handleConfirmDelete}
               onClickEdit={method.handleClickEdit}
               onClickView={method.handleClickView}
-              {...task}
             />
           )
         })}

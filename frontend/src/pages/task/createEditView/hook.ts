@@ -1,0 +1,90 @@
+import { useCallback, useEffect, useMemo, useState } from "react"
+import { matchRoutes, useLocation, useNavigate, useParams } from "react-router-dom";
+import { showErrorToast } from "../../../utils/showErrorToast";
+import { createTask, getTaskById, updateTask } from "../../../services/api";
+import { ITask } from "../../../types/task";
+import { routes } from "../../../routes";
+import { showSuccessToast } from "../../../utils/showSuccessToast";
+
+export const useCreateEditViewTask = () => {
+    const { id } = useParams();
+    const location = useLocation();
+    const matchedRoutes = matchRoutes(routes, location);
+    const activeRoute = matchedRoutes?.[matchedRoutes.length - 1]?.route;
+    const navigate = useNavigate();
+
+    const isReadOnly = useMemo(() => {
+        return activeRoute?.path?.includes("detail");
+    }, [activeRoute])
+
+    const [task, setTask] = useState<ITask>({
+        id: 0,
+        description: "",
+        title: "",
+    })
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const getCurrentTask = useCallback(async () => {
+        if (id) {
+            setIsLoading(true);
+            try {
+                const response = await getTaskById(Number(id));
+                if (!Array.isArray(response.data)) {
+                    setTask(response.data);
+                }
+            } catch (error) {
+                setIsLoading(false);
+                showErrorToast(error)
+            }
+            setIsLoading(false);
+        }
+    }, [id]);
+
+    const handleChangeText = (val: string, key: string) => {
+        setTask((prev) => ({ ...prev, [key]: val }));
+    }
+
+    const addNewTask = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            await createTask(task);
+        } catch (error) {
+            setIsLoading(false);
+            showErrorToast(error);
+        }
+        setIsLoading(false);
+    }, [task]);
+
+    const editTask = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            console.log("here")
+            await updateTask(Number(id), task);
+        } catch (error) {
+            setIsLoading(false);
+            showErrorToast(error)
+        }
+        setIsLoading(false);
+    }, [task]);
+
+    const handleSubmit = useCallback(async () => {
+        if (id) {
+            await editTask();
+        } else {
+            await addNewTask();
+        }
+        showSuccessToast("Successfully Submited", () => {
+            navigate('/task');
+        })
+    }, [id, task])
+
+    useEffect(() => {
+        getCurrentTask();
+    }, [getCurrentTask])
+
+    return {
+        data: { task, isReadOnly, isLoading, activeRoute },
+        method: { handleSubmit, handleChangeText }
+    }
+}
