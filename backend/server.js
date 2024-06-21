@@ -4,9 +4,14 @@ const express = require('express'),
     app     = express(),
     port    = parseInt(process.env.PORT, 10) || 3000,
     bodyParser = require('body-parser')
+    cors = require('cors');
 
 const taskRoute = require('./routes/task.js');
 
+app.use(cors({
+    origin: '*'
+  }));
+  
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
