@@ -1,20 +1,19 @@
-import { Route, Routes } from 'react-router-dom'
-import BaseLayout from './components/layout/BaseLayout'
-import TasksListPage from './pages/task'
-import EditTaskPage from './pages/task/edit'
-import CreateTaskPage from './pages/task/create'
+import {RouterProvider, createBrowserRouter} from "react-router-dom"
+import {routes} from "./routes"
+import {ToastContainer} from "react-toastify"
+import React from "react"
+import { initializeIcons } from '@fluentui/font-icons-mdl2';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+  const router = createBrowserRouter(routes)
+  initializeIcons();
   return (
-    <Routes>
-      <Route path='/' element={<BaseLayout/>}>
-        <Route index element={<TasksListPage/>}/>
-        <Route path='/create' element={<CreateTaskPage/>}/>
-        <Route path='/edit/:id' element={<EditTaskPage/>}/>
-        <Route path='/detail/:id' element={<EditTaskPage/>}/>
-      </Route>
-    </Routes>
+    <React.Fragment>
+      <ToastContainer />
+      <RouterProvider router={router} />
+    </React.Fragment>
   )
 }
 
-export default App;
+export default App

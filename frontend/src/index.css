@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ms-Nav-groupContent{
+  margin-bottom:0;
+}
