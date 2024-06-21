@@ -4,6 +4,7 @@ import { IPagination } from "../../types/common";
 import { deleteTask, getListTask } from "../../services/api";
 import { showErrorToast } from "../../utils/showErrorToast";
 import { useNavigate } from "react-router-dom";
+import { showSuccessToast } from "../../utils/showSuccessToast";
 
 export const useListTask = () => {
     const navigate = useNavigate();
@@ -54,7 +55,7 @@ export const useListTask = () => {
         };
     }, []);
 
-    const handleConfirmDelete = useCallback(async(id:number)=>{
+    const handleConfirmDelete = useCallback(async (id: number) => {
         setIsLoading(true);
         try {
             await deleteTask(id);
@@ -62,19 +63,26 @@ export const useListTask = () => {
             setIsLoading(false)
             showErrorToast(error);
         }
-        setPagination((prev)=>({...prev,page:1}));
         setIsLoading(false);
-    },[])
+        showSuccessToast("Success Delete", () => {
+            setPagination((prev) => ({ ...prev, page: 1 }));
+        })
+    }, [])
 
-    const handleClickEdit = (id:number)=>{
+    const handleClickEdit = (id: number) => {
         navigate(`edit/${id}`)
     }
-    const handleClickView = (id:number)=>{
+
+    const handleClickView = (id: number) => {
         navigate(`detail/${id}`)
+    }
+
+    const handleClickAdd = () => {
+        navigate("create")
     }
 
     return {
         data: { listTask, isLoading },
-        method: {handleConfirmDelete,handleClickView,handleClickEdit}
+        method: { handleConfirmDelete, handleClickView, handleClickEdit, handleClickAdd }
     }
 }

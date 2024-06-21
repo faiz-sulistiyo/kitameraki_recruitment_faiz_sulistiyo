@@ -7,7 +7,7 @@ interface ITaskCardProps {
   title: string
   id: number
   onClickEdit: (id: number) => void
-  onConfirmDelet: (id: number) => void
+  onConfirmDelete: (id: number) => void
   onClickView: (id: number) => void
 }
 
@@ -19,7 +19,7 @@ const TaskCard: React.FC<ITaskCardProps> = ({
   description,
   title,
   id,
-  onConfirmDelet,
+  onConfirmDelete,
   onClickEdit,
   onClickView,
 }) => {
@@ -54,12 +54,12 @@ const TaskCard: React.FC<ITaskCardProps> = ({
       <ConfirmDeleteModal
         isOpen={isOpenModal}
         onHideModal={() => {
-          console.log("first")
           setIsOpenModal(false)
         }}
         id={id}
         onConfirm={() => {
-          onConfirmDelet(id)
+          setIsOpenModal(false)
+          onConfirmDelete(id)
         }}
         title="Confirm Delete"
         message={`Are u sure want to delete record with id: ${id}`}

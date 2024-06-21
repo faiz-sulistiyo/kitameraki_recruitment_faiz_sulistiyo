@@ -18,11 +18,7 @@ export const getListTask = async (pagination: IPagination): Promise<IBaseRespons
 
 export const getTaskById = async (id: number): Promise<IBaseResponse> => {
     try {
-        const response = await axiosInstance.get('/task', {
-            params: {
-                id
-            }
-        });
+        const response = await axiosInstance.get(`/task/${id}`);
         return response.data as IBaseResponse;
     } catch (error) {
         throw error;
@@ -40,11 +36,7 @@ export const createTask = async (task: ITask): Promise<IBaseResponse> => {
 
 export const deleteTask = async (id: number): Promise<IBaseResponse> => {
     try {
-        const response = await axiosInstance.delete('/task', {
-            params: {
-                id
-            }
-        });
+        const response = await axiosInstance.delete(`/task/${id}`);
         return response.data as IBaseResponse;
     } catch (error) {
         throw error;
