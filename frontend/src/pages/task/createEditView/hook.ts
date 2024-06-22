@@ -5,6 +5,7 @@ import { createTask, getTaskById, updateTask } from "../../../services/api";
 import { ITask } from "../../../types/task";
 import { routes } from "../../../routes";
 import { showSuccessToast } from "../../../utils/showSuccessToast";
+import { useFormSettingsContext } from "../../../context/formSettingsContext";
 
 export const useCreateEditViewTask = () => {
     const { id } = useParams();
@@ -12,6 +13,7 @@ export const useCreateEditViewTask = () => {
     const matchedRoutes = matchRoutes(routes, location);
     const activeRoute = matchedRoutes?.[matchedRoutes.length - 1]?.route;
     const navigate = useNavigate();
+    const { optionalFields } = useFormSettingsContext();
 
     const isReadOnly = useMemo(() => {
         return activeRoute?.path?.includes("detail");
@@ -21,6 +23,10 @@ export const useCreateEditViewTask = () => {
         id: 0,
         description: "",
         title: "",
+        ...optionalFields.reduce((acc, curr) => {
+            acc[curr.name || ""] = "";
+            return acc;
+        }, {} as Record<string, string>)
     })
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -31,8 +37,12 @@ export const useCreateEditViewTask = () => {
             try {
                 const response = await getTaskById(Number(id));
                 if (!Array.isArray(response.data)) {
-                    setTask(response.data);
+                    setTask((prev) => ({
+                        ...prev,
+                        ...response.data as Record<string, string>
+                    }));
                 }
+
             } catch (error) {
                 setIsLoading(false);
                 showErrorToast(error)
@@ -41,7 +51,7 @@ export const useCreateEditViewTask = () => {
         }
     }, [id]);
 
-    const handleChangeText = (val: string, key: string) => {
+    const handleChangeText = (val: string|number, key: string) => {
         setTask((prev) => ({ ...prev, [key]: val }));
     }
 
@@ -59,7 +69,6 @@ export const useCreateEditViewTask = () => {
     const editTask = useCallback(async () => {
         setIsLoading(true);
         try {
-            console.log("here")
             await updateTask(Number(id), task);
         } catch (error) {
             setIsLoading(false);
@@ -84,7 +93,7 @@ export const useCreateEditViewTask = () => {
     }, [getCurrentTask])
 
     return {
-        data: { task, isReadOnly, isLoading, activeRoute },
+        data: { task, isReadOnly, isLoading, activeRoute, optionalFields },
         method: { handleSubmit, handleChangeText }
     }
 }

@@ -7,7 +7,7 @@ const Header:React.FC = () => {
   const matchedRoutes = matchRoutes(routes, location);
   const activeRoute = matchedRoutes?.[matchedRoutes.length - 1]?.route;
   return (
-    <header className='flex-none bg-white border border-l-0 sticky top-0 p-4'>
+    <header className='flex-none z-50 bg-white border border-l-0 sticky top-0 p-4'>
       <h1 className='font-bold text-lg'>{activeRoute?.id}</h1>
     </header>
   )

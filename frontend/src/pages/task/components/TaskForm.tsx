@@ -3,7 +3,7 @@ import {PrimaryButton} from "@fluentui/react"
 import {useNavigate} from "react-router-dom"
 
 interface ITaskFormProps {
-  onSubmit: () => void
+  onSubmit?: () => void
   disabled?: boolean
   children?: React.ReactNode
 }
@@ -17,7 +17,7 @@ const TaskForm: React.FC<ITaskFormProps> = ({
   const handleSubmit = useCallback(
     (e: React.SyntheticEvent<HTMLFormElement>) => {
       e.preventDefault()
-      onSubmit()
+      onSubmit && onSubmit()
     },
     [onSubmit],
   )
