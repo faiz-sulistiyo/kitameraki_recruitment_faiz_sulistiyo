@@ -3,6 +3,7 @@ import ListTaskPage from "./pages/task"
 import BaseLayout from "./components/layout/BaseLayout"
 import HomePage from "./pages/home"
 import CreateEditViewTaskPage from "./pages/task/createEditView"
+import FormSettingsPage from "./pages/formSetting"
 
 export const routes: RouteObject[] = [
   {
@@ -46,7 +47,7 @@ export const routes: RouteObject[] = [
         id: "Form Setting",
         path: "/setting",
         index:true,
-        element: <h1>Form Setting</h1>,
+        element: <FormSettingsPage/>,
       },
     ],
   },
