@@ -6,6 +6,10 @@
 
 This repository contains two main folders: `frontend` and `backend`. The `frontend` is built using Vite and React, while the `backend` is built using Express.js.
 
+## Notes
+I'm not implement store in memory based on this article (it says, "A memory leak occurs when a program allocates memory continuously but fails to free it when it is no longer needed. Eventually, the process can run out of memory and crash.")
+https://www.daily.co/blog/introduction-to-memory-management-in-node-js-applications/
+
 ## Folder Structure
 
 - `frontend`: Contains the frontend codebase built with Vite and React.
