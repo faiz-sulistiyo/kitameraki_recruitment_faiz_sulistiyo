@@ -1,59 +1,11 @@
 import {useCreateEditViewTask} from "./hook"
 import TaskForm from "../components/TaskForm"
 import {Card} from "../../../components/common/Card"
-import {DatePicker, SpinButton, TextField} from "@fluentui/react"
-import {IOptionalField} from "../../../context/formSettingsContext"
+import {TextField} from "@fluentui/react"
+import {RenderField} from "../../../components/dnd/RenderField"
 
 const CreateEditViewTaskPage = () => {
   const {data, method} = useCreateEditViewTask()
-
-  const renderElement = (task: IOptionalField) => {
-    switch (task.component) {
-      case "textField":
-        return (
-          <TextField
-            key={task.id}
-            {...task}
-            value={data.task[task.name || ""]?.toString()}
-            onChange={(e) =>
-              task.name &&
-              method.handleChangeText(e.currentTarget.value, task.name)
-            }
-            readOnly={data.isReadOnly}
-          />
-        )
-      case "spinButton":
-        const spinButtonValue = data.task[task.name || ""]
-        return (
-          <SpinButton
-            key={task.id}
-            {...task}
-            value={String(spinButtonValue)}
-            onChange={(_, value) => {
-              if (value && task.name) {
-                method.handleChangeText(value, task.name)
-              }
-            }}
-            disabled={data.isReadOnly}
-          />
-        )
-      case "datePicker":
-        let dateValue = new Date();
-        return (
-          <DatePicker
-            key={task.id}
-            {...task}
-            value={dateValue}
-            disabled={data.isReadOnly}
-            onSelectDate={(val) => {
-              if (val && task.name) {
-                method.handleChangeText(val.getTime(), task.name)
-              }
-            }}
-          />
-        )
-    }
-  }
   return (
     <Card>
       <div className="my-2">
@@ -87,9 +39,25 @@ const CreateEditViewTaskPage = () => {
             method.handleChangeText(e.currentTarget.value, "description")
           }
         />
-        <div className="flex flex-col w-full gap-4">
-
-        {data.optionalFields.map((data) => renderElement(data))}
+        <div className="flex flex-col w-full gap-2 mt-4">
+          {data.optionalFields.map((item) => (
+            <div key={item.id} className="flex items-end gap-2">
+              {item.items?.map((subItem) => {
+                return (
+                  <RenderField
+                    key={subItem.id}
+                    data={subItem}
+                    value={data.task[subItem?.name || ""]?.toString()}
+                    onChange={(val: string) =>
+                      method.handleChangeText(val, subItem?.name || "")
+                    }
+                    focus={false}
+                    isEdit={false}
+                  />
+                )
+              })}
+            </div>
+          ))}
         </div>
       </TaskForm>
     </Card>
