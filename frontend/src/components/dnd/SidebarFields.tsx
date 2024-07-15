@@ -1,6 +1,5 @@
 import React from "react"
 import {Draggable, Droppable} from "@hello-pangea/dnd"
-import {TextField, DatePicker, SpinButton} from "@fluentui/react"
 
 const SidebarFields: React.FC = () => {
   const fields = [

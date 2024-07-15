@@ -25,7 +25,7 @@ const OptionalFieldEditor: React.FC<IOptionalFieldEditorProps> = ({
     show && (
       <form
         onSubmit={(e) => {
-          e.preventDefault
+          e.preventDefault();
           onSubmit(field)
         }}
         className="flex flex-col min-w-[20%] border p-2"
