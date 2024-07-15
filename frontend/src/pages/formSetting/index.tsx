@@ -2,7 +2,7 @@ import React from "react"
 import {DragDropContext} from "@hello-pangea/dnd"
 import SidebarFields from "../../components/common/SidebarFields"
 import OptionalFields from "../../components/common/OptionalFields"
-import OptionalFieldEditor from "../../components/common/OptionalFiledEditor"
+import OptionalFieldEditor from "../../components/common/OptionalFieldEditor"
 import {TextField} from "@fluentui/react"
 import {useFormSetting} from "./hook"
 
