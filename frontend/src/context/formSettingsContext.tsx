@@ -17,6 +17,7 @@ export interface IOptionalField {
   component: string
   label:string
   name?:string
+  items?: IOptionalField[]
 }
 
 const FormSettingsContext = createContext<FormSettingsContextProps | undefined>(
