@@ -78,7 +78,7 @@ export const RenderField: React.FC<IRenderFieldProps> = ({
           onClick={() => handleClickField && handleClickField(data)}
           className={`${
             focus && "opacity-100"
-          } absolute flex flex-grow items-center justify-end px-2 top-0 z-40 w-full h-full opacity-0 bg-black hover:opacity-100 bg-opacity-30 transition-opacity duration-500`}
+          } absolute flex flex-grow items-center justify-end px-2 top-0 left-0 z-40 w-full h-full opacity-0 bg-black hover:opacity-100 bg-opacity-30 transition-opacity duration-500`}
         >
           {focus && (
             <IconButton

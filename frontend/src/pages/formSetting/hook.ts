@@ -17,23 +17,33 @@ export const useFormSetting = () => {
   const fieldList = ["textField", "datePicker", "spinButton"]
 
   const onDragEnd = (result: DropResult) => {
-    const { destination, source } = result;
+    const { destination, source, type } = result;
 
+    // Prevent drop when there's destination
     if (!destination) return;
   
-    if (result.type === "blockRow" && source.droppableId !== "sidebar") {
-      handleBlockRowDrag(result);
+    // Update form layout horizontally
+    if (type === "blockRow") {
+      handleUpdateLayoutHorizontal(result);
       return;
-    } 
+    }
 
-    if (source.droppableId === "sidebar" && destination.droppableId === "optional-fields") {
-      handleSidebarToOptionalFieldsDrag(result);
+    // Update form layout vertically
+    if (type === "DEFAULT" && source.droppableId !== "sidebar") {
+      handleUpdateLayoutVertical(result);
+      return;
+    }
+
+    // Adding new items from sidebar
+    if (type === "DEFAULT" && source.droppableId === "sidebar") {
+      handleAddNewElement(result);
       return;
     }
   };
 
-  const handleSidebarToOptionalFieldsDrag = (result: DropResult) => {
+  const handleAddNewElement = (result: DropResult) => {
     const { source, destination } = result;
+
     if (!destination) {
       return;
     }
@@ -70,7 +80,7 @@ export const useFormSetting = () => {
     setOptionalFields(newOptionalFields);
   };
 
-  const handleBlockRowDrag = (result: DropResult) => {
+  const handleUpdateLayoutHorizontal = (result: DropResult) => {
     const { destination, source } = result;
     if (!destination) {
       return;
@@ -107,14 +117,44 @@ export const useFormSetting = () => {
         // Add the dragged item to the destination parent's items array
         newOptionalFields[parentIndex] = {
           ...newOptionalFields[parentIndex],
-          items: [...(newOptionalFields[parentIndex].items || []), draggedItem],
+          items: [...(newOptionalFields[parentIndex].items || [])],
         };
+        // Add the dragged item to the destination index within the items array
+        newOptionalFields[parentIndex].items?.splice(destination.index, 0, draggedItem);
   
+        const filteredOptionalFields = newOptionalFields.filter((item)=>!!item.items?.length);
         // Update state with the new array
-        setOptionalFields(newOptionalFields);
+        setOptionalFields(filteredOptionalFields);
       }
     }
   };
+
+  const handleUpdateLayoutVertical = (result: DropResult) => {
+    const { destination, source, draggableId } = result;
+  
+    // If there's no destination, exit the function
+    if (!destination) {
+      return;
+    }
+  
+    // Clone the optionalFields array
+    let newOptionalFields = [...optionalFields];
+  
+    // Find the dragged item
+    const draggedItemIndex = newOptionalFields.findIndex(item => item.id === draggableId);
+    const draggedItem = newOptionalFields[draggedItemIndex];
+  
+    // Remove the dragged item from the source index
+    newOptionalFields.splice(source.index, 1);
+  
+    // Insert the dragged item at the destination index
+    newOptionalFields.splice(destination.index, 0, draggedItem);
+  
+    const filteredOptionalFields = newOptionalFields.filter((item)=>!!item.items?.length);
+    // Update the state with the new array
+    setOptionalFields(filteredOptionalFields);
+  };
+  
   
 
 
@@ -133,7 +173,11 @@ export const useFormSetting = () => {
         }));
     };
 
-    setOptionalFields((prevFields) => deleteFieldById(prevFields));
+    setOptionalFields((prevFields) => {
+      // Remove parent with empty items
+      const filteredFields = deleteFieldById(prevFields).filter((item)=>!!item.items?.length);
+      return filteredFields
+    });
   }, []);
 
 
@@ -150,7 +194,11 @@ export const useFormSetting = () => {
       });
     };
 
-    setOptionalFields((prevFields) => updateFieldById(prevFields));
+    setOptionalFields((prevFields) => {
+      // Remove parent with empty items
+      const filteredFields = updateFieldById(prevFields).filter((item)=>!!item.items?.length);
+      return filteredFields
+    });
   }, []);
 
   return {
