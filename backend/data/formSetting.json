@@ -1,0 +1,24 @@
+[
+  {
+    "id": "5e0240e4-ccb1-4853-9214-64c11a17cd50",
+    "items": [
+      {
+        "id": "c1788070-768f-462f-9812-4e430de0fecf",
+        "component": "datePicker",
+        "name": "datePicker-5e0240e4-ccb1-4853-9214-64c11a17cd50",
+        "label": "New Field"
+      }
+    ]
+  },
+  {
+    "id": "1b561d90-ef4d-4ade-9e41-4e47a4dd51f9",
+    "items": [
+      {
+        "id": "e29467dd-6bea-4611-802d-61d6f76b145b",
+        "component": "datePicker",
+        "name": "datePicker-1b561d90-ef4d-4ade-9e41-4e47a4dd51f9",
+        "label": "New Field"
+      }
+    ]
+  }
+]

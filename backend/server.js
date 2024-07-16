@@ -7,6 +7,7 @@ const express = require('express'),
     cors = require('cors');
 
 const taskRoute = require('./routes/task.js');
+const formSettingRoute = require('./routes/formSetting.js');
 
 app.use(cors({
     origin: '*'
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use('/task', taskRoute);
+app.use('/form-settings', formSettingRoute);
 
 // Specify the port to listen on
 app.listen(port, () => {
