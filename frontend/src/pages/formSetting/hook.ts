@@ -1,16 +1,15 @@
 import { DropResult } from "@hello-pangea/dnd"
-import { IOptionalField, useFormSettingsContext } from "../../context/formSettingsContext"
-import { useCallback, useState } from "react";
+import { IOptionalField, IOptionalFieldItem, useFormSettingsContext } from "../../context/formSettingsContext"
+import { SyntheticEvent, useCallback, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import { postFormSetting } from "../../services/api";
+import { showErrorToast } from "../../utils/showErrorToast";
 
 export const useFormSetting = () => {
   const { optionalFields, setOptionalFields } = useFormSettingsContext();
   const [showFieldEditor, setShowFieldEditor] = useState<boolean>(false);
   const [currentField, setCurrentField] = useState<IOptionalField>({
-    component: "",
     id: "",
-    label: "",
-    name: "",
     items: []
   })
 
@@ -35,7 +34,7 @@ export const useFormSetting = () => {
     }
 
     // Adding new items from sidebar
-    if (type === "DEFAULT" && source.droppableId === "sidebar") {
+    if (type === "DEFAULT" && source.droppableId === "sidebar" && destination.droppableId !== "sidebar") {
       handleAddNewElement(result);
       return;
     }
@@ -53,20 +52,19 @@ export const useFormSetting = () => {
     // Generate uuid to make sure each id is unique
     const uuid = uuidv4();
     const subId = uuidv4();
+
+    const fieldType = fieldList[source.index];
   
     // Create a new field object
-    const newField: IOptionalField = {
+    const newField: IOptionalFieldItem = {
       id: subId,
       component: draggedField,
-      name: "newField",
+      name: `${fieldType}-${uuid}`,
       label: "New Field",
     };
   
     const newParentField: IOptionalField = {
       id: uuid,
-      component: draggedField,
-      name: "parentField",
-      label: "",
       items: [newField],
     };
   
@@ -165,44 +163,67 @@ export const useFormSetting = () => {
 
   const handleDeleteField = useCallback((id: string) => {
     const deleteFieldById = (fields: IOptionalField[]): IOptionalField[] => {
-      return fields
-        .filter((field) => field.id !== id)
-        .map((field) => ({
-          ...field,
-          items: field.items ? deleteFieldById(field.items) : [],
-        }));
+      return fields.map((field) => ({
+        ...field,
+        items: field.items
+          ? field.items.filter((item) => item.id !== id)
+          : [],
+      }));
     };
-
+  
     setOptionalFields((prevFields) => {
-      // Remove parent with empty items
-      const filteredFields = deleteFieldById(prevFields).filter((item)=>!!item.items?.length);
-      return filteredFields
+      // Update fields by deleting the item with the specified id
+      const updatedFields = deleteFieldById(prevFields);
+  
+      // Remove parent fields with empty items
+      const filteredFields = updatedFields.filter(
+        (field) => !field.items || field.items.length > 0
+      );
+  
+      return filteredFields;
     });
-  }, []);
-
+  }, [setOptionalFields]);
 
   const handleUpdateField = useCallback((data: IOptionalField) => {
+    // Recursively update fields by ID
     const updateFieldById = (fields: IOptionalField[]): IOptionalField[] => {
       return fields.map((field) => {
         if (field.id === data.id) {
+          // Update the field with new data
           return { ...field, ...data };
         }
-        return {
-          ...field,
-          items: field.items ? updateFieldById(field.items) : [],
-        };
-      });
+        if (field.items) {
+          // Recursively update nested items
+          return { ...field, items: updateFieldById(field.items) };
+        }
+        return field;
+      }) as IOptionalField[];
     };
-
+  
     setOptionalFields((prevFields) => {
-      // Remove parent with empty items
-      const filteredFields = updateFieldById(prevFields).filter((item)=>!!item.items?.length);
-      return filteredFields
+      // Update fields with updatedFieldById function
+      const updatedFields = updateFieldById(prevFields);
+  
+      // Filter out parent fields with empty items
+      const filteredFields = updatedFields.filter(
+        (field) => !field.items || field.items.length > 0
+      );
+  
+      return filteredFields;
     });
-  }, []);
+  }, [setOptionalFields]);
 
+  const handleSubmitSetting = async (e:SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await postFormSetting(optionalFields);
+      
+    } catch (error) {
+      showErrorToast(error)
+    }
+  }
   return {
     data: { optionalFields, currentField, showFieldEditor },
-    method: { onDragEnd, handleClickField, handleDeleteField, handleUpdateField }
+    method: { onDragEnd, handleClickField, handleDeleteField, handleUpdateField, handleSubmitSetting }
   }
 }

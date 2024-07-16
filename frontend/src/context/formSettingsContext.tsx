@@ -6,6 +6,7 @@ import React, {
   ReactNode,
   useEffect,
 } from "react"
+import { getFormSettings } from "../services/api"
 
 interface FormSettingsContextProps {
   optionalFields: IOptionalField[]
@@ -14,10 +15,14 @@ interface FormSettingsContextProps {
 
 export interface IOptionalField {
   id: string
+  items?: IOptionalFieldItem[]
+}
+
+export interface IOptionalFieldItem {
+  id: string
   component: string
   label:string
   name?:string
-  items?: IOptionalField[]
 }
 
 const FormSettingsContext = createContext<FormSettingsContextProps | undefined>(
@@ -27,13 +32,19 @@ const FormSettingsContext = createContext<FormSettingsContextProps | undefined>(
 export const FormSettingsProvider: React.FC<{children: ReactNode}> = ({
   children,
 }) => {
-  const initialOptionalFields: IOptionalField[] = JSON.parse(localStorage.getItem('optionalFields') || '[]');
-  const [optionalFields, setOptionalFields] = useState<IOptionalField[]>(initialOptionalFields)
+  
+  // const initialOptionalFields: IOptionalField[] = data;
+  const [optionalFields, setOptionalFields] = useState<IOptionalField[]>([])
 
-  // Update localStorage whenever optionalFields changes
-  useEffect(() => {
-    localStorage.setItem("optionalFields", JSON.stringify(optionalFields))
-  }, [optionalFields])
+  // get initialform
+  const getInitialForm = async () => {
+    const {data} =await getFormSettings();
+    setOptionalFields(data as IOptionalField[]);
+  }
+
+  useEffect(()=>{
+    getInitialForm();
+  },[])
 
   return (
     <FormSettingsContext.Provider value={{optionalFields, setOptionalFields}}>

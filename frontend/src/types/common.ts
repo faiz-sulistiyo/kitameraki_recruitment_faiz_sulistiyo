@@ -1,3 +1,4 @@
+import { IOptionalField } from "../context/formSettingsContext"
 import { ITask } from "./task"
 
 export interface IPagination {
@@ -7,7 +8,7 @@ export interface IPagination {
 
 export interface IBaseResponse extends Partial<IPaginationResponse> {
     message:string
-    data: ITask | ITask[]
+    data: ITask | ITask[] | IOptionalField[]
 }
 
 export interface IPaginationResponse {
