@@ -10,7 +10,7 @@ interface IDraggableFieldProps {
 }
 
 
-export const DraggableField: React.FC<IDraggableFieldProps> = ({
+const DraggableField: React.FC<IDraggableFieldProps> = ({
   draggableId,
   id,
   index,
@@ -42,3 +42,5 @@ export const DraggableField: React.FC<IDraggableFieldProps> = ({
     </Draggable>
   )
 }
+
+export default DraggableField;

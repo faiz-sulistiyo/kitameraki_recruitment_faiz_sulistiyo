@@ -7,7 +7,7 @@ interface DroppableFieldProps {
   direction:Direction,
   type?:string;
 }
-export const DroppableField: React.FC<DroppableFieldProps> = ({children,droppableId,direction,type="DEFAULT"}) => {
+const DroppableField: React.FC<DroppableFieldProps> = ({children,droppableId,direction,type="DEFAULT"}) => {
   return (
     <Droppable droppableId={droppableId} direction={direction} type={type}>
       {(provided) => (
@@ -23,3 +23,5 @@ export const DroppableField: React.FC<DroppableFieldProps> = ({children,droppabl
     </Droppable>
   )
 }
+
+export default DroppableField;

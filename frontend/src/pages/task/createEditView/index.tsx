@@ -1,8 +1,7 @@
 import {useCreateEditViewTask} from "./hook"
 import TaskForm from "../components/TaskForm"
-import {Card} from "../../../components/common/Card"
+import {Card,RenderField} from "../../../components/"
 import {TextField} from "@fluentui/react"
-import {RenderField} from "../../../components/dnd/RenderField"
 
 const CreateEditViewTaskPage = () => {
   const {data, method} = useCreateEditViewTask()

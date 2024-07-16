@@ -1,12 +1,14 @@
 import React from "react"
 import {DragDropContext} from "@hello-pangea/dnd"
-import SidebarFields from "../../components/dnd/SidebarFields"
-import OptionalFieldEditor from "../../components/dnd/OptionalFieldEditor"
 import {TextField} from "@fluentui/react"
 import {useFormSetting} from "./hook"
-import {DroppableField} from "../../components/dnd/DroppableField"
-import {DraggableField} from "../../components/dnd/DraggableField"
-import {RenderField} from "../../components/dnd/RenderField"
+import {
+  DroppableField,
+  DraggableField,
+  RenderField,
+  SidebarFields,
+  OptionalFieldEditor,
+} from "../../components"
 
 const FormSettings: React.FC = () => {
   const {data, method} = useFormSetting()
@@ -58,23 +60,23 @@ const FormSettings: React.FC = () => {
                       direction="horizontal"
                       droppableId={field.id}
                     >
-                        {field.items?.map((subField, index) => {
-                          return (
-                            <DraggableField
-                              draggableId={subField.id}
-                              id={subField.id}
-                              index={index}
-                              key={index}
-                            >
-                              <RenderField
-                                data={subField}
-                                handleClickField={method.handleClickField}
-                                handleDeleteField={method.handleDeleteField}
-                                focus={data.currentField.id === subField.id}
-                              />
-                            </DraggableField>
-                          )
-                        })}
+                      {field.items?.map((subField, index) => {
+                        return (
+                          <DraggableField
+                            draggableId={subField.id}
+                            id={subField.id}
+                            index={index}
+                            key={index}
+                          >
+                            <RenderField
+                              data={subField}
+                              handleClickField={method.handleClickField}
+                              handleDeleteField={method.handleDeleteField}
+                              focus={data.currentField.id === subField.id}
+                            />
+                          </DraggableField>
+                        )
+                      })}
                     </DroppableField>
                   </DraggableField>
                 )

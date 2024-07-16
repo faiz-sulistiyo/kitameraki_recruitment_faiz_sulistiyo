@@ -22,7 +22,7 @@ interface IRenderFieldProps {
 
 const deleteIcon: IIconProps = {iconName: "Delete"}
 
-export const RenderField: React.FC<IRenderFieldProps> = ({
+const RenderField: React.FC<IRenderFieldProps> = ({
   data,
   handleClickField,
   focus,
@@ -94,3 +94,5 @@ export const RenderField: React.FC<IRenderFieldProps> = ({
     </React.Fragment>
   )
 }
+
+export default RenderField;
