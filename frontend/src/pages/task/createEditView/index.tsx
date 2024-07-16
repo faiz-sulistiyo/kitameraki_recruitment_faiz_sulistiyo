@@ -52,6 +52,7 @@ const CreateEditViewTaskPage = () => {
                     }
                     focus={false}
                     isEdit={false}
+                    readonly={data.isReadOnly}
                   />
                 )
               })}

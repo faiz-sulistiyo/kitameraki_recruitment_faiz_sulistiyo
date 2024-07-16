@@ -7,6 +7,7 @@ import { showErrorToast } from "../../utils/showErrorToast";
 
 export const useFormSetting = () => {
   const { optionalFields, setOptionalFields } = useFormSettingsContext();
+  const [isLoading,setIsLoading] = useState<boolean>(false);
   const [showFieldEditor, setShowFieldEditor] = useState<boolean>(false);
   const [currentField, setCurrentField] = useState<IOptionalField>({
     id: "",
@@ -20,15 +21,16 @@ export const useFormSetting = () => {
 
     // Prevent drop when there's destination
     if (!destination) return;
-  
+
     // Update form layout horizontally
-    if (type === "blockRow") {
+    if (!["sidebar", "optional-fields"].includes(destination.droppableId)) {
       handleUpdateLayoutHorizontal(result);
       return;
     }
 
     // Update form layout vertically
     if (type === "DEFAULT" && source.droppableId !== "sidebar") {
+      console.log("first")
       handleUpdateLayoutVertical(result);
       return;
     }
@@ -46,15 +48,15 @@ export const useFormSetting = () => {
     if (!destination) {
       return;
     }
-  
+
     const draggedField = fieldList[Number(source.index)]; // Assuming fieldList is defined somewhere
-  
+
     // Generate uuid to make sure each id is unique
     const uuid = uuidv4();
     const subId = uuidv4();
 
     const fieldType = fieldList[source.index];
-  
+
     // Create a new field object
     const newField: IOptionalFieldItem = {
       id: subId,
@@ -62,18 +64,18 @@ export const useFormSetting = () => {
       name: `${fieldType}-${uuid}`,
       label: "New Field",
     };
-  
+
     const newParentField: IOptionalField = {
       id: uuid,
       items: [newField],
     };
-  
+
     // Clone optionalFields array
     const newOptionalFields = [...optionalFields];
-  
+
     // Insert the new field at the specified destination index
     newOptionalFields.splice(destination.index, 0, newParentField);
-  
+
     // Update state with the new array
     setOptionalFields(newOptionalFields);
   };
@@ -83,26 +85,26 @@ export const useFormSetting = () => {
     if (!destination) {
       return;
     }
-    
+
     // Clone the optionalFields array
     let newOptionalFields = [...optionalFields];
-  
+
     // Find the parent droppable field
     const parentIndex = newOptionalFields.findIndex(
       (item) => item.id === destination?.droppableId
     );
-  
+
     // Find the source parent and dragged item
     const sourceParentIndex = newOptionalFields.findIndex(
       (item) => item.id === source.droppableId
     );
-  
-    if (parentIndex !== -1 && sourceParentIndex !== -1) {
+
+    if (parentIndex !== -1) {
       const sourceParent = newOptionalFields[sourceParentIndex];
-      const draggedItem = sourceParent.items?.find(
+      let draggedItem = sourceParent?.items?.find(
         (item) => item.id === result.draggableId
       );
-  
+
       if (draggedItem) {
         // Remove the dragged item from the source parent
         newOptionalFields[sourceParentIndex] = {
@@ -111,22 +113,31 @@ export const useFormSetting = () => {
             (item) => item.id !== result.draggableId
           ),
         };
-  
-        // Add the dragged item to the destination parent's items array
-        newOptionalFields[parentIndex] = {
-          ...newOptionalFields[parentIndex],
-          items: [...(newOptionalFields[parentIndex].items || [])],
-        };
-        // Add the dragged item to the destination index within the items array
-        newOptionalFields[parentIndex].items?.splice(destination.index, 0, draggedItem);
-  
-        const filteredOptionalFields = newOptionalFields.filter((item)=>!!item.items?.length);
-        // Update state with the new array
-        setOptionalFields(filteredOptionalFields);
       }
+
+      const uuid = uuidv4();
+      draggedItem = {
+        id: uuid,
+        component: fieldList[source.index],
+        name: `${fieldList[source.index]}-${uuid}`,
+        label: "New Field"
+      }
+
+      // Add the dragged item to the destination parent's items array
+      newOptionalFields[parentIndex] = {
+        ...newOptionalFields[parentIndex],
+        items: [...(newOptionalFields[parentIndex].items || [])],
+      };
+      // Add the dragged item to the destination index within the items array
+      newOptionalFields[parentIndex].items?.splice(destination.index, 0, draggedItem);
+
+      const filteredOptionalFields = newOptionalFields.filter((item) => !!item.items?.length);
+      // Update state with the new array
+      setOptionalFields(filteredOptionalFields);
     }
   };
 
+  // TODO Fix move from horizontal to vertical behaviour
   const handleUpdateLayoutVertical = (result: DropResult) => {
     const { destination, source, draggableId } = result;
   
@@ -138,23 +149,35 @@ export const useFormSetting = () => {
     // Clone the optionalFields array
     let newOptionalFields = [...optionalFields];
   
-    // Find the dragged item
-    const draggedItemIndex = newOptionalFields.findIndex(item => item.id === draggableId);
-    const draggedItem = newOptionalFields[draggedItemIndex];
+    // Check if the source droppableId is "optional-fields"
+    if (source.droppableId === "optional-fields") {
+      // Find the parent item index
+      const parentIndex = newOptionalFields.findIndex((item) => item.id === source.droppableId);
+      if (parentIndex !== -1) {
+        // Remove the dragged item from the parent's items array
+        newOptionalFields[parentIndex].items = newOptionalFields[parentIndex]?.items?.filter(
+          (item) => item.id !== draggableId
+        );
+      }
+    } else {
+      // Find the dragged item index
+      const draggedItemIndex = newOptionalFields.findIndex((item) => item.id === draggableId);
+      if (draggedItemIndex !== -1) {
+        // Remove the dragged item from its original position
+        const draggedItem = newOptionalFields[draggedItemIndex];
+        newOptionalFields.splice(draggedItemIndex, 1);
   
-    // Remove the dragged item from the source index
-    newOptionalFields.splice(source.index, 1);
+        // Insert the dragged item at the destination index
+        newOptionalFields.splice(destination.index, 0, draggedItem);
+      }
+    }
   
-    // Insert the dragged item at the destination index
-    newOptionalFields.splice(destination.index, 0, draggedItem);
+    // Filter out parents with empty items
+    const filteredOptionalFields = newOptionalFields.filter((item) => !!item?.items?.length);
   
-    const filteredOptionalFields = newOptionalFields.filter((item)=>!!item.items?.length);
     // Update the state with the new array
     setOptionalFields(filteredOptionalFields);
   };
-  
-  
-
 
   const handleClickField = useCallback((data: IOptionalField) => {
     setCurrentField(data);
@@ -170,16 +193,16 @@ export const useFormSetting = () => {
           : [],
       }));
     };
-  
+
     setOptionalFields((prevFields) => {
       // Update fields by deleting the item with the specified id
       const updatedFields = deleteFieldById(prevFields);
-  
+
       // Remove parent fields with empty items
       const filteredFields = updatedFields.filter(
         (field) => !field.items || field.items.length > 0
       );
-  
+
       return filteredFields;
     });
   }, [setOptionalFields]);
@@ -199,31 +222,33 @@ export const useFormSetting = () => {
         return field;
       }) as IOptionalField[];
     };
-  
+
     setOptionalFields((prevFields) => {
       // Update fields with updatedFieldById function
       const updatedFields = updateFieldById(prevFields);
-  
+
       // Filter out parent fields with empty items
       const filteredFields = updatedFields.filter(
         (field) => !field.items || field.items.length > 0
       );
-  
+
       return filteredFields;
     });
   }, [setOptionalFields]);
 
-  const handleSubmitSetting = async (e:SyntheticEvent<HTMLFormElement>) => {
+  const handleSubmitSetting = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await postFormSetting(optionalFields);
-      
+      setIsLoading(false)
     } catch (error) {
-      showErrorToast(error)
+      showErrorToast(error);
+      setIsLoading(false);
     }
   }
   return {
-    data: { optionalFields, currentField, showFieldEditor },
+    data: { optionalFields, isLoading, currentField, showFieldEditor },
     method: { onDragEnd, handleClickField, handleDeleteField, handleUpdateField, handleSubmitSetting }
   }
 }

@@ -23,7 +23,7 @@ export const useCreateEditViewTask = () => {
         id: 0,
         description: "",
         title: "",
-        ...optionalFields.reduce((acc, curr) => {
+        ...optionalFields?.[0]?.items?.reduce((acc, curr) => {
             acc[curr.name || ""] = "";
             return acc;
         }, {} as Record<string, string>)

@@ -7,10 +7,10 @@ import {
   Position,
 } from "@fluentui/react"
 import React from "react"
-import {IOptionalField} from "../../context/formSettingsContext"
+import {IOptionalField, IOptionalFieldItem} from "../../context/formSettingsContext"
 
 interface IRenderFieldProps {
-  data: IOptionalField
+  data: IOptionalFieldItem
   handleClickField?: (field: IOptionalField) => void
   handleDeleteField?: (id: string) => void
   focus: boolean
@@ -18,6 +18,7 @@ interface IRenderFieldProps {
   onChange?: (val: string) => void
   readonly?: boolean
   isEdit?: boolean
+  className?:string
 }
 
 const deleteIcon: IIconProps = {iconName: "Delete"}
@@ -31,14 +32,15 @@ const RenderField: React.FC<IRenderFieldProps> = ({
   readonly,
   onChange,
   value,
+  className
 }) => {
-  const renderElement = (data: IOptionalField) => {
+  const renderElement = (data: IOptionalFieldItem) => {
     switch (data.component) {
       case "textField":
         return (
           <TextField
             readOnly={readonly}
-            defaultValue={value}
+            value={value}
             onChange={(e) => onChange && onChange(e.currentTarget.value)}
             className="flex-1"
             label={data.label}
@@ -72,7 +74,7 @@ const RenderField: React.FC<IRenderFieldProps> = ({
   }
 
   return (
-    <React.Fragment>
+    <div className={className}>
       {isEdit && (
         <div
           onClick={() => handleClickField && handleClickField(data)}
@@ -91,7 +93,7 @@ const RenderField: React.FC<IRenderFieldProps> = ({
         </div>
       )}
       {renderElement(data)}
-    </React.Fragment>
+    </div>
   )
 }
 
