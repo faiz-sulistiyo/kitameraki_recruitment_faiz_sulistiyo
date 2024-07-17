@@ -51,7 +51,7 @@ export const useCreateEditViewTask = () => {
         }
     }, [id]);
 
-    const handleChangeText = (val: string|number, key: string) => {
+    const handleChangeText = (key: string,val: string|number) => {
         setTask((prev) => ({ ...prev, [key]: val }));
     }
 
@@ -78,7 +78,7 @@ export const useCreateEditViewTask = () => {
     }, [task]);
 
     const handleSubmit = useCallback(async () => {
-        if (id) {
+        if (!!id) {
             await editTask();
         } else {
             await addNewTask();
