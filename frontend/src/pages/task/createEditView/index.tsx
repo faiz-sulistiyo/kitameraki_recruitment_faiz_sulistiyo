@@ -1,6 +1,5 @@
 import {useCreateEditViewTask} from "./hook"
-import TaskForm from "../components/TaskForm"
-import {Card, LoadingOverlay} from "../../../components/"
+import {Card, LoadingOverlay, TaskForm} from "../../../components/"
 
 const CreateEditViewTaskPage = () => {
   const {data, method} = useCreateEditViewTask()
@@ -17,10 +16,11 @@ const CreateEditViewTaskPage = () => {
             disabled={data.isReadOnly}
             onSubmit={method.handleSubmit}
             formSettings={data.optionalFields}
-            value={data.task}
+            // value={data.task}
             onChange={method.handleChangeText}
           />
         )}
+        <button onClick={method.handleResetForm}>Reset</button>
       </Card>
     </>
   )

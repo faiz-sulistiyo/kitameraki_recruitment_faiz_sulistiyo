@@ -7,7 +7,7 @@ import { showErrorToast } from "../../utils/showErrorToast";
 
 export const useFormSetting = () => {
   const { optionalFields, setOptionalFields } = useFormSettingsContext();
-  const [isLoading,setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showFieldEditor, setShowFieldEditor] = useState<boolean>(false);
   const [currentField, setCurrentField] = useState<IOptionalField>({
     id: "",
@@ -18,6 +18,7 @@ export const useFormSetting = () => {
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, type } = result;
+    console.log(result);
 
     // Prevent drop when there's destination
     if (!destination) return;
@@ -29,9 +30,14 @@ export const useFormSetting = () => {
     }
 
     // Update form layout vertically
-    if (type === "DEFAULT" && source.droppableId !== "sidebar") {
+    if (type === "DEFAULT" && source.droppableId === "optional-fields") {
       console.log("first")
       handleUpdateLayoutVertical(result);
+      return;
+    }
+
+    if (type === "DEFAULT" && !["sidebar", "optional-fields"].includes(source.droppableId) && destination.droppableId === "optional-fields") {
+      handleUpdateLayoutHorizontalToVertical(result);
       return;
     }
 
@@ -137,45 +143,71 @@ export const useFormSetting = () => {
     }
   };
 
-  // TODO Fix move from horizontal to vertical behaviour
+    const handleUpdateLayoutHorizontalToVertical = (result:DropResult) => {
+      const {destination,source,draggableId} = result;
+      if (!destination) {
+        return;
+      }
+      // 1. Clone the optionalFields array
+      let newOptionalFields = [...optionalFields];
+
+      // 2. Find the correct source index
+      let sourceIndex = -1;
+      let itemIndex = -1;
+
+      // Iterate through newOptionalFields to find the source index and item index
+      for (let i = 0; i < newOptionalFields.length; i++) {
+        const items = newOptionalFields[i].items;
+        if (items) {
+          const foundIndex = items.findIndex((item) => item.id === draggableId);
+          if (foundIndex !== -1) {
+            sourceIndex = i;
+            itemIndex = foundIndex;
+            break;
+          }
+        }
+      }
+      if (sourceIndex !== -1) {
+        const uuid = uuidv4();
+        const item = newOptionalFields[sourceIndex].items?.[source.index];
+        console.log(item);
+        if (item) {
+          const newItem:IOptionalField = {
+            id:uuid,
+            items:[
+              ...[item]
+            ]
+          }
+          newOptionalFields[source.index].items?.splice(sourceIndex,1);
+    
+          newOptionalFields.splice(destination.index,0,newItem);
+        }
+      }
+      const filteredOptionalFields = newOptionalFields.filter((item) => !!item?.items?.length);
+      setOptionalFields(filteredOptionalFields);
+    }
+
   const handleUpdateLayoutVertical = (result: DropResult) => {
-    const { destination, source, draggableId } = result;
-  
-    // If there's no destination, exit the function
+    const { destination, source } = result;
+
     if (!destination) {
       return;
     }
-  
-    // Clone the optionalFields array
+
+    // 1. Clone the optionalFields array
     let newOptionalFields = [...optionalFields];
-  
-    // Check if the source droppableId is "optional-fields"
-    if (source.droppableId === "optional-fields") {
-      // Find the parent item index
-      const parentIndex = newOptionalFields.findIndex((item) => item.id === source.droppableId);
-      if (parentIndex !== -1) {
-        // Remove the dragged item from the parent's items array
-        newOptionalFields[parentIndex].items = newOptionalFields[parentIndex]?.items?.filter(
-          (item) => item.id !== draggableId
-        );
-      }
-    } else {
-      // Find the dragged item index
-      const draggedItemIndex = newOptionalFields.findIndex((item) => item.id === draggableId);
-      if (draggedItemIndex !== -1) {
-        // Remove the dragged item from its original position
-        const draggedItem = newOptionalFields[draggedItemIndex];
-        newOptionalFields.splice(draggedItemIndex, 1);
-  
-        // Insert the dragged item at the destination index
-        newOptionalFields.splice(destination.index, 0, draggedItem);
-      }
-    }
-  
-    // Filter out parents with empty items
+
+    // 2. Remove the dragged item from source and clone the removed item
+    const item = newOptionalFields[source.index];
+    newOptionalFields.splice(source.index, 1);
+    
+    // 3. Insert Dragged item at destination
+    newOptionalFields.splice(destination.index, 0, item);
+
+    // 4. Filter out parents with empty items (Ensure data are sanitized)
     const filteredOptionalFields = newOptionalFields.filter((item) => !!item?.items?.length);
-  
-    // Update the state with the new array
+
+    // 5. Update the state with the new array
     setOptionalFields(filteredOptionalFields);
   };
 

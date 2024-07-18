@@ -4,6 +4,7 @@ import Header from "./Header";
 import SideBar from "./Sidebar";
 import TaskCard from "./TaskCard";
 import LoadingOverlay from "./LoadingOverlay";
+import TaskForm from "./TaskForm";
 
 export {
     Card,
@@ -11,5 +12,6 @@ export {
     Header,
     SideBar,
     TaskCard,
-    LoadingOverlay
+    LoadingOverlay,
+    TaskForm
 }

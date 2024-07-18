@@ -1,9 +1,9 @@
-import React, {useCallback, useRef} from "react"
+import React, {useCallback, useEffect, useRef, useState} from "react"
 import {PrimaryButton, TextField} from "@fluentui/react"
 import {useNavigate} from "react-router-dom"
-import {RenderField} from "../../../components"
-import {ITask} from "../../../types/task"
-import {IOptionalField} from "../../../context/formSettingsContext"
+import {RenderField} from ".."
+import {ITask} from "../../types/task"
+import {IOptionalField} from "../../context/formSettingsContext"
 
 interface ITaskFormProps {
   onSubmit?: (data?: ITask) => void
@@ -11,6 +11,7 @@ interface ITaskFormProps {
   value?: ITask
   formSettings?: IOptionalField[]
   onChange?: (key: string, value: string) => void
+  defaultValue?: ITask
 }
 
 const TaskForm: React.FC<ITaskFormProps> = ({
@@ -19,9 +20,15 @@ const TaskForm: React.FC<ITaskFormProps> = ({
   formSettings,
   value,
   onChange,
+  defaultValue,
 }) => {
   const navigate = useNavigate()
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null)
+  const initial:ITask = {
+    description:"",
+    title:"",
+  }
+  const [task, setTask] = useState<ITask>(value || defaultValue || initial);
 
   const handleSubmit = useCallback(
     (e: React.SyntheticEvent<HTMLFormElement>) => {
@@ -30,13 +37,13 @@ const TaskForm: React.FC<ITaskFormProps> = ({
       if (onSubmit) {
         if (!onChange && formRef?.current) {
           // Handle when component used as uncontrolled component
-          const formData = new FormData(formRef.current);
-          const data: { [key: string]: any } = {};
+          const formData = new FormData(formRef.current)
+          const data: {[key: string]: any} = {}
           formData.forEach((value, key) => {
-            data[key] = value;
-          });
+            data[key] = value
+          })
           onSubmit(data as ITask)
-          return;
+          return
         }
         // Otherwise let the parent handle form value itself
         onSubmit()
@@ -48,16 +55,27 @@ const TaskForm: React.FC<ITaskFormProps> = ({
   const handleChange = (key: string, val: string) => {
     if (onChange) {
       onChange(key, val)
+      setTask((prev) => ({...prev, [key]: val}))
     }
   }
 
+  useEffect(() => {
+    if (value) {
+      setTask(value)
+    }
+  }, [value])
+
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col md:max-w-[80%]">
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      className="flex flex-col md:max-w-[80%]"
+    >
       <TextField
         label="Title"
         id="title"
         name="title"
-        defaultValue={value?.title?.toString() || ""}
+        value={task?.title?.toString() || ""}
         required
         readOnly={disabled}
         onChange={(_, newVal) => handleChange("title", newVal || "")}
@@ -67,7 +85,7 @@ const TaskForm: React.FC<ITaskFormProps> = ({
         label="Description"
         id="description"
         name="description"
-        defaultValue={value?.description?.toString() || ""}
+        value={task?.description?.toString() || ""}
         multiline
         rows={3}
         required
@@ -82,7 +100,7 @@ const TaskForm: React.FC<ITaskFormProps> = ({
               <RenderField
                 key={subItem.id}
                 data={subItem}
-                value={value?.[subItem?.name || ""]?.toString()}
+                value={task?.[subItem?.name || ""]?.toString()}
                 onChange={(val) => handleChange(subItem?.name || "", val)}
                 focus={false}
                 isEdit={false}
