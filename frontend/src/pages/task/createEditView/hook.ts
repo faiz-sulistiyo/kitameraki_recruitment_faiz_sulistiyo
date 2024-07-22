@@ -19,15 +19,17 @@ export const useCreateEditViewTask = () => {
         return activeRoute?.path?.includes("detail");
     }, [activeRoute])
 
-    const [task, setTask] = useState<ITask>({
+    const initialData = {
         id: 0,
         description: "",
         title: "",
-        ...optionalFields.reduce((acc, curr) => {
+        ...optionalFields?.[0]?.items?.reduce((acc, curr) => {
             acc[curr.name || ""] = "";
             return acc;
         }, {} as Record<string, string>)
-    })
+    }
+
+    const [task, setTask] = useState<ITask>(initialData)
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -51,7 +53,7 @@ export const useCreateEditViewTask = () => {
         }
     }, [id]);
 
-    const handleChangeText = (val: string|number, key: string) => {
+    const handleChangeText = (key: string,val: string|number) => {
         setTask((prev) => ({ ...prev, [key]: val }));
     }
 
@@ -78,7 +80,8 @@ export const useCreateEditViewTask = () => {
     }, [task]);
 
     const handleSubmit = useCallback(async () => {
-        if (id) {
+        // return;
+        if (!!id) {
             await editTask();
         } else {
             await addNewTask();
@@ -88,12 +91,16 @@ export const useCreateEditViewTask = () => {
         })
     }, [id, task])
 
+    const handleResetForm = () => {
+        setTask(initialData);
+    }
+
     useEffect(() => {
         getCurrentTask();
     }, [getCurrentTask])
 
     return {
         data: { task, isReadOnly, isLoading, activeRoute, optionalFields },
-        method: { handleSubmit, handleChangeText }
+        method: { handleSubmit, handleChangeText,handleResetForm }
     }
 }

@@ -1,6 +1,5 @@
 import {useListTask} from "./hook"
-import {Card} from "../../components/common/Card"
-import TaskCard from "../../components/common/TaskCard"
+import {Card,TaskCard} from "../../components/"
 import { PrimaryButton } from "@fluentui/react"
 
 const ListTaskPage = () => {
