@@ -152,7 +152,7 @@ app.http('task', {
     })
 });
 
-app.http('task_id', {
+app.http('taskId', {
     methods: ['GET', 'DELETE', 'PUT'],
     authLevel: 'anonymous',
     route: 'v1/task/{id}',
