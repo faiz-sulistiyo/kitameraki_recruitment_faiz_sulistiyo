@@ -18,7 +18,6 @@ export const useFormSetting = () => {
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, type } = result;
-    console.log(result);
 
     // Prevent drop when there's destination
     if (!destination) return;
@@ -31,7 +30,6 @@ export const useFormSetting = () => {
 
     // Update form layout vertically
     if (type === "DEFAULT" && source.droppableId === "optional-fields") {
-      console.log("first")
       handleUpdateLayoutVertical(result);
       return;
     }
@@ -170,7 +168,6 @@ export const useFormSetting = () => {
       if (sourceIndex !== -1) {
         const uuid = uuidv4();
         const item = newOptionalFields[sourceIndex].items?.[source.index];
-        console.log(item);
         if (item) {
           const newItem:IOptionalField = {
             id:uuid,

@@ -20,7 +20,6 @@ export const useCreateEditViewTask = () => {
     }, [activeRoute])
 
     const initialData = {
-        id: 0,
         description: "",
         title: "",
         ...optionalFields?.[0]?.items?.reduce((acc, curr) => {
