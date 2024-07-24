@@ -16,6 +16,7 @@ interface IRenderFieldProps {
   readonly?: boolean
   isEdit?: boolean
   className?: string
+  onRender?:(data:IOptionalFieldItem) => React.ReactNode
 }
 
 const RenderField: React.FC<IRenderFieldProps> = ({
@@ -28,6 +29,7 @@ const RenderField: React.FC<IRenderFieldProps> = ({
   onChange,
   value,
   className,
+  onRender
 }) => {
   const renderElement = (data: IOptionalFieldItem) => {
     switch (data.component) {
@@ -94,7 +96,7 @@ const RenderField: React.FC<IRenderFieldProps> = ({
           )}
         </div>
       )}
-      {renderElement(data)}
+      {onRender ? onRender(data) : renderElement(data)}
     </div>
   )
 }

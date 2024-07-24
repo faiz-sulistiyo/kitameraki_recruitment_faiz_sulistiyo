@@ -32,15 +32,15 @@ const OptionalFieldEditor: React.FC<IOptionalFieldEditorProps> = ({
         className="flex flex-col gap-4 min-w-[20%] border p-2"
       >
         <InputText
-          label="Field Label"
           placeholder="Enter your Field Label, Ex. 'Title'"
           value={field.label}
+          contentBefore={<div className="font-bold">Label :</div>}
           onChange={(e) => handleChangeText(e.currentTarget.value, "label")}
         />
         <InputText
-          label="Field Name"
           placeholder="Enter your field name, Ex. 'title'"
           value={field.name}
+          contentBefore={<div className="font-bold">Name :</div>}
           onChange={(e) => handleChangeText(e.currentTarget.value, "name")}
         />
         <Button appearance="primary" type="submit">Save</Button>
