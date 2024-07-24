@@ -3,8 +3,8 @@ import {IOptionalFieldItem} from "../../context/formSettingsContext"
 import InputText from "../common/InputText"
 import InputDatePicker from "../common/InputDatePicker"
 import InputSpinButton from "../common/InputSpinButton"
-import { Button } from "@fluentui/react-components"
-import { DeleteFilled } from "@fluentui/react-icons"
+import {Button} from "@fluentui/react-components"
+import {DeleteFilled} from "@fluentui/react-icons"
 
 interface IRenderFieldProps {
   data: IOptionalFieldItem
@@ -12,12 +12,11 @@ interface IRenderFieldProps {
   handleDeleteField?: (id: string) => void
   focus: boolean
   value?: string
-  onChange?: (val: string|number) => void
+  onChange?: (val: string | number) => void
   readonly?: boolean
   isEdit?: boolean
-  className?:string
+  className?: string
 }
-
 
 const RenderField: React.FC<IRenderFieldProps> = ({
   data,
@@ -28,7 +27,7 @@ const RenderField: React.FC<IRenderFieldProps> = ({
   readonly,
   onChange,
   value,
-  className
+  className,
 }) => {
   const renderElement = (data: IOptionalFieldItem) => {
     switch (data.component) {
@@ -42,24 +41,25 @@ const RenderField: React.FC<IRenderFieldProps> = ({
             className="flex-1"
             label={data.label}
             name={data.name}
+            disabled={readonly}
           />
         )
       case "spinButton":
         return (
           <InputSpinButton
-          id={data.name}
+            id={data.name}
             value={parseInt(value || "0")}
-            onChange={(_,data) => onChange && onChange(data.value || "")}
+            onChange={(_, data) => onChange && onChange(data.value || "")}
             className="flex-1"
             label={data.label}
             step={1}
+            readOnly={readonly}
+            disabled={readonly}
           />
         )
       case "datePicker":
         return (
           <InputDatePicker
-            disabled={readonly}
-            
             value={value ? new Date(value) : null}
             onSelectDate={(date) => {
               onChange && onChange(date ? date.toISOString() : "")
@@ -69,6 +69,7 @@ const RenderField: React.FC<IRenderFieldProps> = ({
             id={data.name}
             today={new Date()}
             showGoToToday
+            disabled={readonly}
           />
         )
     }
@@ -86,7 +87,7 @@ const RenderField: React.FC<IRenderFieldProps> = ({
           {focus && (
             <Button
               className="bg-gray-300"
-              icon={<DeleteFilled/>}
+              icon={<DeleteFilled />}
               aria-label="Delete"
               onClick={() => handleDeleteField && handleDeleteField(data.id)}
             />
@@ -98,4 +99,4 @@ const RenderField: React.FC<IRenderFieldProps> = ({
   )
 }
 
-export default RenderField;
+export default RenderField

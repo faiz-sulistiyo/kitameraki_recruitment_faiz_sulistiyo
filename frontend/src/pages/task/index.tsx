@@ -1,11 +1,13 @@
 import {useListTask} from "./hook"
-import {Card,TaskCard} from "../../components/"
+import {Card,LoadingOverlay,TaskCard} from "../../components/"
 import {AddFilled} from "@fluentui/react-icons"
 import { Button } from "@fluentui/react-components"
 
 const ListTaskPage = () => {
   const {data, method} = useListTask()
   return (
+    <>
+    <LoadingOverlay isLoading={data.isLoading}/>
     <Card className="flex flex-col gap-6">
       <div className="flex flex-col items-center justify-center gap-4">
         <h1 className="font-bold text-lg">Welcome to the Task List page!</h1>
@@ -32,6 +34,7 @@ const ListTaskPage = () => {
         })}
       </div>
     </Card>
+    </>
   )
 }
 

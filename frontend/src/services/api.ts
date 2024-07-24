@@ -47,7 +47,7 @@ export const deleteTask = async (id: number): Promise<IBaseResponse> => {
     }
 }
 
-export const updateTask = async (id: number, task: Partial<ITask>): Promise<IBaseResponse> => {
+export const updateTask = async (id: string, task: Partial<ITask>): Promise<IBaseResponse> => {
     try {
         const response = await axiosInstance.put(`/task/${id}`, task);
         return response.data as IBaseResponse;

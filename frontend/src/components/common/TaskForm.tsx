@@ -82,6 +82,7 @@ const TaskForm: React.FC<ITaskFormProps> = ({
         readOnly={disabled}
         onChange={(ev) => handleChange("title", ev.currentTarget.value || "")}
         placeholder="Ex. Going to supermarket"
+        disabled={disabled}
       />
       <InputTextArea
         label="Description"
@@ -95,6 +96,7 @@ const TaskForm: React.FC<ITaskFormProps> = ({
         onChange={(ev) =>
           handleChange("description", ev.currentTarget.value || "")
         }
+        disabled={disabled}
       />
       {formSettings?.map((item) => (
         <div key={item.id} className="flex flex-1 items-end gap-2">

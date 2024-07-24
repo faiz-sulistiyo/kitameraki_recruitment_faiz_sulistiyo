@@ -70,7 +70,11 @@ export const useCreateEditViewTask = () => {
     const editTask = useCallback(async () => {
         setIsLoading(true);
         try {
-            await updateTask(Number(id), task);
+            if (!id) {
+                setIsLoading(false);
+                return
+            }
+            await updateTask(id, task);
         } catch (error) {
             setIsLoading(false);
             showErrorToast(error)

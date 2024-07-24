@@ -47,7 +47,9 @@ export const useListTask = () => {
     // Handle scroll event to trigger fetching more tasks
     const handleScroll = useCallback(() => {
         const scrollPosition = Math.ceil(window.innerHeight + document.documentElement.scrollTop);
-        const offsetHeight = document.documentElement.offsetHeight;
+        const offsetHeight = document.documentElement.offsetHeight - 10;
+        console.log("position",scrollPosition);
+        console.log("offset",offsetHeight);
 
         if (scrollPosition >= offsetHeight && !isLoading && token) {
             setPagination((prev) => ({
