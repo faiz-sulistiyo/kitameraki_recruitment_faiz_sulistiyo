@@ -5,11 +5,14 @@ import { ITask } from "../types/task";
 
 export const getListTask = async (pagination: IPagination): Promise<IBaseResponse> => {
     try {
+        const customHeader = {
+            "Continuation-Token": pagination?.continuationToken ? pagination.continuationToken : undefined
+        }
         const response = await axiosInstance.get("/task", {
             params: {
-                page: pagination.page,
-                per_page: pagination.perPage
-            }
+                perPage: pagination.perPage
+            },
+            headers: customHeader
         });
         return response.data as IBaseResponse;
     } catch (error) {
@@ -55,18 +58,18 @@ export const updateTask = async (id: number, task: Partial<ITask>): Promise<IBas
 
 export const getFormSettings = async (): Promise<IBaseResponse> => {
     try {
-      const response = await axiosInstance.get("/form-settings");
-      return response.data as IBaseResponse;
+        const response = await axiosInstance.get("/form-setting");
+        return response.data as IBaseResponse;
     } catch (error) {
-      throw error;
+        throw error;
     }
-  }
+}
 
-  export const postFormSetting = async (settings:IOptionalField[]): Promise<IBaseResponse> => {
+export const postFormSetting = async (settings: IOptionalField[]): Promise<IBaseResponse> => {
     try {
-      const response = await axiosInstance.post("/form-settings", settings);
-      return response.data as IBaseResponse;
+        const response = await axiosInstance.post("/form-setting", settings);
+        return response.data as IBaseResponse;
     } catch (error) {
-      throw error;
+        throw error;
     }
-  }
+}

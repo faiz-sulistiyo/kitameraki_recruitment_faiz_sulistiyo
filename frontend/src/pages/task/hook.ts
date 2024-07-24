@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react";
 import { ITask } from "../../types/task";
 import { IPagination } from "../../types/common";
 import { deleteTask, getListTask } from "../../services/api";
@@ -11,78 +11,84 @@ export const useListTask = () => {
     const [listTask, setListTask] = useState<ITask[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [pagination, setPagination] = useState<IPagination>({
-        page: 1,
         perPage: 10,
-    })
+        continuationToken: undefined,
+    });
 
+    const [token,setToken] = useState<string|undefined>();
+
+    // Function to fetch tasks
     const getListTasks = useCallback(async () => {
         setIsLoading(true);
         try {
             const response = await getListTask(pagination);
+
             if (Array.isArray(response.data)) {
                 const newData = response.data as ITask[];
 
                 setListTask((prev) => {
-                    return pagination.page > 1 ? [...prev, ...newData] : newData;
+                    return (response.continuationToken && listTask.length >= pagination.perPage) || listTask.length >= pagination.perPage ? [...prev, ...newData] : newData    
                 });
+
             }
+            setToken(response.continuationToken);
         } catch (error) {
-            setIsLoading(false);
             showErrorToast(error);
+        } finally {
+            setIsLoading(false);
         }
-        setIsLoading(false);
     }, [pagination]);
 
+    // Fetch tasks on component mount or pagination change
     useEffect(() => {
         getListTasks();
     }, [getListTasks]);
 
-    const handleScroll = () => {
-        const scrollPostition = Math.ceil(window.innerHeight + document.documentElement.scrollTop) + 1;
+    // Handle scroll event to trigger fetching more tasks
+    const handleScroll = useCallback(() => {
+        const scrollPosition = Math.ceil(window.innerHeight + document.documentElement.scrollTop);
         const offsetHeight = document.documentElement.offsetHeight;
-        if (scrollPostition >= offsetHeight && !isLoading) {
+
+        if (scrollPosition >= offsetHeight && !isLoading && token) {
             setPagination((prev) => ({
                 ...prev,
-                page: prev.page + 1
-            }))
+                continuationToken: token
+            }));
         }
-    };
+    }, [isLoading, token]);
+
+    console.log(listTask.length)
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [handleScroll]);
 
+    // Handle delete task
     const handleConfirmDelete = useCallback(async (id: number) => {
         setIsLoading(true);
         try {
             await deleteTask(id);
+            showSuccessToast("Successfully deleted", () => {
+                // Optionally refetch tasks or update state
+                setPagination({ perPage: 10, continuationToken: undefined });
+            });
         } catch (error) {
-            setIsLoading(false)
             showErrorToast(error);
+        } finally {
+            setIsLoading(false);
         }
-        setIsLoading(false);
-        showSuccessToast("Success Delete", () => {
-            setPagination((prev) => ({ ...prev, page: 1 }));
-        })
-    }, [])
+    }, []);
 
-    const handleClickEdit = (id: number) => {
-        navigate(`edit/${id}`)
-    }
-
-    const handleClickView = (id: number) => {
-        navigate(`detail/${id}`)
-    }
-
-    const handleClickAdd = () => {
-        navigate("create")
-    }
+    // Navigation handlers
+    const handleClickEdit = (id: number) => navigate(`edit/${id}`);
+    const handleClickView = (id: number) => navigate(`detail/${id}`);
+    const handleClickAdd = () => navigate("create");
 
     return {
         data: { listTask, isLoading },
         method: { handleConfirmDelete, handleClickView, handleClickEdit, handleClickAdd }
-    }
-}
+    };
+};

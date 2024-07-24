@@ -2,13 +2,14 @@ import { IOptionalField } from "../context/formSettingsContext"
 import { ITask } from "./task"
 
 export interface IPagination {
-    page:number,
+    continuationToken?:string,
     perPage:number
 }
 
 export interface IBaseResponse extends Partial<IPaginationResponse> {
     message:string
     data: ITask | ITask[] | IOptionalField[]
+    continuationToken?:string
 }
 
 export interface IPaginationResponse {

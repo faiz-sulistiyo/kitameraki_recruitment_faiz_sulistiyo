@@ -16,7 +16,7 @@ const CreateEditViewTaskPage = () => {
             disabled={data.isReadOnly}
             onSubmit={method.handleSubmit}
             formSettings={data.optionalFields}
-            // value={data.task}
+            value={data.task}
             onChange={method.handleChangeText}
           />
         )}
