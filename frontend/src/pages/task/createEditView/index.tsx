@@ -20,7 +20,6 @@ const CreateEditViewTaskPage = () => {
             onChange={method.handleChangeText}
           />
         )}
-        <button onClick={method.handleResetForm}>Reset</button>
       </Card>
     </>
   )

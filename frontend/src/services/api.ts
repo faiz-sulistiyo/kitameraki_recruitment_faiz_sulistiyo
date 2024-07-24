@@ -20,7 +20,7 @@ export const getListTask = async (pagination: IPagination): Promise<IBaseRespons
     }
 }
 
-export const getTaskById = async (id: number): Promise<IBaseResponse> => {
+export const getTaskById = async (id: string): Promise<IBaseResponse> => {
     try {
         const response = await axiosInstance.get(`/task/${id}`);
         return response.data as IBaseResponse;

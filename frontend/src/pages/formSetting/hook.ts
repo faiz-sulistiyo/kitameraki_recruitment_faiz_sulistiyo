@@ -9,9 +9,11 @@ export const useFormSetting = () => {
   const { optionalFields, setOptionalFields } = useFormSettingsContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showFieldEditor, setShowFieldEditor] = useState<boolean>(false);
-  const [currentField, setCurrentField] = useState<IOptionalField>({
-    id: "",
-    items: []
+  const [currentField, setCurrentField] = useState<IOptionalFieldItem>({
+    component:"",
+    id:"",
+    label:"",
+    name:""
   })
 
   const fieldList = ["textField", "datePicker", "spinButton"]
@@ -151,7 +153,6 @@ export const useFormSetting = () => {
 
       // 2. Find the correct source index
       let sourceIndex = -1;
-      let itemIndex = -1;
 
       // Iterate through newOptionalFields to find the source index and item index
       for (let i = 0; i < newOptionalFields.length; i++) {
@@ -160,7 +161,6 @@ export const useFormSetting = () => {
           const foundIndex = items.findIndex((item) => item.id === draggableId);
           if (foundIndex !== -1) {
             sourceIndex = i;
-            itemIndex = foundIndex;
             break;
           }
         }
@@ -208,12 +208,13 @@ export const useFormSetting = () => {
     setOptionalFields(filteredOptionalFields);
   };
 
-  const handleClickField = useCallback((data: IOptionalField) => {
+  const handleClickField = useCallback((data: IOptionalFieldItem) => {
     setCurrentField(data);
     setShowFieldEditor(true);
   }, [])
 
-  const handleDeleteField = useCallback((id: string) => {
+  const handleDeleteField = (id: string) => {
+    setShowFieldEditor(false);
     const deleteFieldById = (fields: IOptionalField[]): IOptionalField[] => {
       return fields.map((field) => ({
         ...field,
@@ -234,7 +235,7 @@ export const useFormSetting = () => {
 
       return filteredFields;
     });
-  }, [setOptionalFields]);
+  };
 
   const handleUpdateField = useCallback((data: IOptionalField) => {
     // Recursively update fields by ID

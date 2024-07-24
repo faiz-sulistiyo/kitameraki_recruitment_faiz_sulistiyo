@@ -10,7 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fluentui/react": "^8.118.8",
+    "@fluentui/react-components": "^9.54.5",
+    "@fluentui/react-datepicker-compat": "^0.4.44",
+    "@fluentui/react-icons": "^2.0.249",
+    "@fluentui/react-nav-preview": "^0.5.2",
+    "@fluentui/react-northstar": "^0.66.5",
     "@hello-pangea/dnd": "^16.6.0",
     "axios": "^1.7.2",
     "react": "^18.2.0",

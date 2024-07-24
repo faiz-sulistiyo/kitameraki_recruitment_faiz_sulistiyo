@@ -57,8 +57,6 @@ export const useListTask = () => {
         }
     }, [isLoading, token]);
 
-    console.log(listTask.length)
-
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {

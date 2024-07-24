@@ -1,27 +1,23 @@
-import {
-  TextField,
-  SpinButton,
-  DatePicker,
-  IconButton,
-  IIconProps,
-  Position,
-} from "@fluentui/react"
 import React from "react"
-import {IOptionalField, IOptionalFieldItem} from "../../context/formSettingsContext"
+import {IOptionalFieldItem} from "../../context/formSettingsContext"
+import InputText from "../common/InputText"
+import InputDatePicker from "../common/InputDatePicker"
+import InputSpinButton from "../common/InputSpinButton"
+import { Button } from "@fluentui/react-components"
+import { DeleteFilled } from "@fluentui/react-icons"
 
 interface IRenderFieldProps {
   data: IOptionalFieldItem
-  handleClickField?: (field: IOptionalField) => void
+  handleClickField?: (field: IOptionalFieldItem) => void
   handleDeleteField?: (id: string) => void
   focus: boolean
   value?: string
-  onChange?: (val: string) => void
+  onChange?: (val: string|number) => void
   readonly?: boolean
   isEdit?: boolean
   className?:string
 }
 
-const deleteIcon: IIconProps = {iconName: "Delete"}
 
 const RenderField: React.FC<IRenderFieldProps> = ({
   data,
@@ -38,7 +34,8 @@ const RenderField: React.FC<IRenderFieldProps> = ({
     switch (data.component) {
       case "textField":
         return (
-          <TextField
+          <InputText
+            id={data.name}
             readOnly={readonly}
             value={value}
             onChange={(e) => onChange && onChange(e.currentTarget.value)}
@@ -49,25 +46,29 @@ const RenderField: React.FC<IRenderFieldProps> = ({
         )
       case "spinButton":
         return (
-          <SpinButton
-            value={value}
-            onChange={(_, val) => onChange && onChange(val || "")}
+          <InputSpinButton
+          id={data.name}
+            value={parseInt(value || "0")}
+            onChange={(_,data) => onChange && onChange(data.value || "")}
             className="flex-1"
-            labelPosition={Position.top}
             label={data.label}
+            step={1}
           />
         )
       case "datePicker":
         return (
-          <DatePicker
+          <InputDatePicker
             disabled={readonly}
-            value={value ? new Date(value) : undefined}
+            
+            value={value ? new Date(value) : null}
             onSelectDate={(date) => {
               onChange && onChange(date ? date.toISOString() : "")
             }}
             className="flex-1 !-mb-1"
             label={data.label}
-            id={data.id}
+            id={data.name}
+            today={new Date()}
+            showGoToToday
           />
         )
     }
@@ -83,9 +84,9 @@ const RenderField: React.FC<IRenderFieldProps> = ({
           } absolute flex flex-grow items-center justify-end px-2 top-0 left-0 z-40 w-full h-full opacity-0 bg-black hover:opacity-100 bg-opacity-30 transition-opacity duration-500`}
         >
           {focus && (
-            <IconButton
+            <Button
               className="bg-gray-300"
-              iconProps={deleteIcon}
+              icon={<DeleteFilled/>}
               aria-label="Delete"
               onClick={() => handleDeleteField && handleDeleteField(data.id)}
             />

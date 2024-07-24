@@ -1,18 +1,19 @@
-import {PrimaryButton, TextField} from "@fluentui/react"
 import React, {useCallback, useEffect, useState} from "react"
-import {IOptionalField} from "../../context/formSettingsContext"
+import {IOptionalFieldItem} from "../../context/formSettingsContext"
+import InputText from "../common/InputText"
+import { Button } from "@fluentui/react-components"
 
 interface IOptionalFieldEditorProps {
   show?: boolean
-  data: IOptionalField
-  onSubmit: (data: IOptionalField) => void
+  data: IOptionalFieldItem
+  onSubmit: (data: IOptionalFieldItem) => void
 }
 const OptionalFieldEditor: React.FC<IOptionalFieldEditorProps> = ({
   show,
   data,
   onSubmit,
 }) => {
-  const [field, setField] = useState<IOptionalField>(data)
+  const [field, setField] = useState<IOptionalFieldItem>(data)
   useEffect(() => {
     setField(data)
   }, [data])
@@ -28,21 +29,21 @@ const OptionalFieldEditor: React.FC<IOptionalFieldEditorProps> = ({
           e.preventDefault();
           onSubmit(field)
         }}
-        className="flex flex-col min-w-[20%] border p-2"
+        className="flex flex-col gap-4 min-w-[20%] border p-2"
       >
-        <TextField
+        <InputText
           label="Field Label"
           placeholder="Enter your Field Label, Ex. 'Title'"
           value={field.label}
           onChange={(e) => handleChangeText(e.currentTarget.value, "label")}
         />
-        <TextField
+        <InputText
           label="Field Name"
           placeholder="Enter your field name, Ex. 'title'"
           value={field.name}
           onChange={(e) => handleChangeText(e.currentTarget.value, "name")}
         />
-        <PrimaryButton text="Submit" type="submit" className="mt-6" />
+        <Button appearance="primary" type="submit">Save</Button>
       </form>
     )
   )

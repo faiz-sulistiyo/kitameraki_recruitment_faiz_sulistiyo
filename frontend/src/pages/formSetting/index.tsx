@@ -1,6 +1,5 @@
 import React from "react"
 import {DragDropContext} from "@hello-pangea/dnd"
-import {PrimaryButton, TextField} from "@fluentui/react"
 import {useFormSetting} from "./hook"
 import {
   DroppableField,
@@ -10,6 +9,9 @@ import {
   OptionalFieldEditor,
   LoadingOverlay,
 } from "../../components"
+import InputText from "../../components/common/InputText"
+import InputTextArea from "../../components/common/InputTextArea"
+import { Button } from "@fluentui/react-components"
 
 const FormSettings: React.FC = () => {
   const {data, method} = useFormSetting()
@@ -29,14 +31,13 @@ const FormSettings: React.FC = () => {
               <h2 className="text-sm">Fill your task detail below.</h2>
             </div>
             <span className="font-bold text-sm">Standar Field</span>
-            <TextField
+            <InputText
               label="Title"
               name="title"
               placeholder="Ex. Going to supermarket"
             />
-            <TextField
+            <InputTextArea
               label="Description"
-              multiline
               rows={3}
               name="title"
               placeholder="Ex. Buy some food to restock our fridge"
@@ -104,7 +105,7 @@ const FormSettings: React.FC = () => {
                 })}
               </DroppableField>
             </div>
-            <PrimaryButton type="submit" text="Save Form" />
+            <Button type="submit" appearance="primary">Save Form</Button>
           </form>
           <OptionalFieldEditor
             show={data.showFieldEditor}

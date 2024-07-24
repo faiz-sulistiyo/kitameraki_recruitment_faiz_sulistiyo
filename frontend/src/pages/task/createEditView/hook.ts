@@ -36,7 +36,7 @@ export const useCreateEditViewTask = () => {
         if (id) {
             setIsLoading(true);
             try {
-                const response = await getTaskById(Number(id));
+                const response = await getTaskById(id);
                 if (!Array.isArray(response.data)) {
                     setTask((prev) => ({
                         ...prev,

@@ -1,6 +1,7 @@
-import React, {useState} from "react"
-import {IIconProps, IconButton} from "@fluentui/react"
+import React from "react"
 import ConfirmDeleteModal from "./ConfirmDeleteModal"
+import {Button} from "@fluentui/react-components"
+import {EyeFilled, EditFilled, DeleteFilled} from "@fluentui/react-icons"
 
 interface ITaskCardProps {
   description: string
@@ -11,10 +12,6 @@ interface ITaskCardProps {
   onClickView: (id: number) => void
 }
 
-const editIcon: IIconProps = {iconName: "Edit"}
-const deleteIcon: IIconProps = {iconName: "Delete"}
-const viewIcon: IIconProps = {iconName: "SeeDo"}
-
 const TaskCard: React.FC<ITaskCardProps> = ({
   description,
   title,
@@ -23,7 +20,6 @@ const TaskCard: React.FC<ITaskCardProps> = ({
   onClickEdit,
   onClickView,
 }) => {
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
   return (
     <div className="flex flex-shrink-0 min-h-10 flex-col gap-4 py-2 px-6 rounded-md border">
       <div className="flex flex-col gap-4 items-center h-full">
@@ -32,38 +28,33 @@ const TaskCard: React.FC<ITaskCardProps> = ({
           <h3 className="text-center text-sm">{description}</h3>
         </div>
         <div className="flex gap-2 mt-auto">
-          <IconButton
+          <Button
+            className="flex-1"
             onClick={() => onClickEdit(id)}
-            iconProps={editIcon}
+            icon={<EditFilled className="text-blue-700" />}
             aria-label="Edit"
           />
-          <IconButton
+          <Button
+            className="flex-1"
             onClick={() => onClickView(id)}
-            iconProps={viewIcon}
+            icon={<EyeFilled className="text-green-700"/>}
             aria-label="View"
           />
-          <IconButton
-            onClick={() => {
-              setIsOpenModal(true)
-            }}
-            iconProps={deleteIcon}
-            aria-label="Delete"
+          <ConfirmDeleteModal
+            title="Confirm Delete"
+            message={`Are u sure want to delete record with id: ${id}`}
+            onConfirm={onConfirmDelete}
+            id={id}
+            triggerButton={
+              <Button
+                icon={<DeleteFilled className="text-red-700"/>}
+                aria-label="Delete"
+                className="!min-w-fit"
+              />
+            }
           />
         </div>
       </div>
-      <ConfirmDeleteModal
-        isOpen={isOpenModal}
-        onHideModal={() => {
-          setIsOpenModal(false)
-        }}
-        id={id}
-        onConfirm={() => {
-          setIsOpenModal(false)
-          onConfirmDelete(id)
-        }}
-        title="Confirm Delete"
-        message={`Are u sure want to delete record with id: ${id}`}
-      />
     </div>
   )
 }

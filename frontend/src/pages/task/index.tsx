@@ -1,6 +1,7 @@
 import {useListTask} from "./hook"
 import {Card,TaskCard} from "../../components/"
-import { PrimaryButton } from "@fluentui/react"
+import {AddFilled} from "@fluentui/react-icons"
+import { Button } from "@fluentui/react-components"
 
 const ListTaskPage = () => {
   const {data, method} = useListTask()
@@ -14,7 +15,7 @@ const ListTaskPage = () => {
           and make sure nothing falls through the cracks.
         </p>
       </div>
-      <PrimaryButton onClick={method.handleClickAdd} text="Add Task" className="w-fit"/>
+      <Button appearance="primary"  onClick={method.handleClickAdd} icon={<AddFilled />} className="w-fit">Add Task</Button>
       <div className="grid grid-cols-2 gap-2">
         {data.listTask.map((task) => {
           return (
